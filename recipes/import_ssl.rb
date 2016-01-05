@@ -9,7 +9,7 @@ bash "import-ssl" do
 #  action :nothing
   code <<-EOH
       tar zxf /tmp/ssl_crt.tar.gz 
-      keytool -importcert -file propel-ha-1.hp.com_propel_host.crt -keystore propel.truststore -alias "propel-ha-1.hp.com" -storepass "propel2014" -noprompt
-      keytool -importcert -file propel-ha-2.hp.com_propel_host.crt -keystore propel.truststore -alias "propel-ha-2.hp.com" -storepass "propel2014" -noprompt
+      keytool -importcert -file /tmp/ssl_crt/propel-ha-1.hp.com_propel_host.crt -keystore /opt/hp/propel/security/propel.truststore -alias "propel-ha-1.hp.com" -storepass "propel2014" -noprompt
+      keytool -importcert -file /tmp/ssl_crt/propel-ha-2.hp.com_propel_host.crt -keystore /opt/hp/propel/security/propel.truststore -alias "propel-ha-2.hp.com" -storepass "propel2014" -noprompt
       EOH
 end

@@ -37,7 +37,7 @@ server {
         proxy_set_header Host $host:9510;
         proxy_set_header X-Real-IP $remote_addr:9510;
     }
-    server_name propel-210-1.n1.hp.com;
+    server_name <%= @server_name %>;
     ssl on;
     ssl_certificate /etc/nginx/ssl/propel_host.crt;
     ssl_certificate_key /etc/nginx/ssl/propel_host.key.rsa;
@@ -53,7 +53,7 @@ server {
         proxy_set_header Host $host:8080;
         proxy_set_header X-Real-IP $remote_addr:8080;
     }
-    server_name propel-210-1.n1.hp.com;
+    server_name <%= @server_name %>;
 }
 
 server {
@@ -63,7 +63,7 @@ server {
         proxy_set_header Host $host:9444;
         proxy_set_header X-Real-IP $remote_addr:9444;
     }
-    server_name propel-210-1.n1.hp.com;
+    server_name <%= @server_name %>;
     ssl on;
     ssl_certificate /etc/nginx/ssl/propel_host.crt;
     ssl_certificate_key /etc/nginx/ssl/propel_host.key.rsa;
@@ -79,7 +79,7 @@ server {
         proxy_set_header Host $host:9595;
         proxy_set_header X-Real-IP $remote_addr:9595;
     }
-    server_name propel-210-1.n1.hp.com;
+    server_name <%= @server_name %>;
     ssl on;
     ssl_certificate /etc/nginx/ssl/propel_host.crt;
     ssl_certificate_key /etc/nginx/ssl/propel_host.key.rsa;
@@ -95,7 +95,7 @@ server {
         proxy_set_header Host $host:9810;
         proxy_set_header X-Real-IP $remote_addr:9810;
     }
-    server_name propel-210-1.n1.hp.com;
+    server_name <%= @server_name %>;
     ssl on;
     ssl_certificate /etc/nginx/ssl/propel_host.crt;
     ssl_certificate_key /etc/nginx/ssl/propel_host.key.rsa;
