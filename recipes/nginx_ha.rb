@@ -28,6 +28,19 @@ bash "Generate certificate" do
     EOH
 end
 
+#Upload SSL cert to node attribute
+ruby_block "SSL cert uploading" do
+  block do
+puts "hello"
+    if File.exists?("/etc/nginx/ssl/propel_host.crt")
+      f = File.open("/etc/nginx/ssl/propel_host.crt")
+      puts f.read
+      node.set["ssl_cert"] = f.read
+      f.close
+    end
+  end
+end
+
 #Configure nginx configuration file for reserve proxy
 if node.hostname == node[:propel_nginx][:nginx_ha_master]
     priority = 100
