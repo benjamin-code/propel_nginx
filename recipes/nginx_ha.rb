@@ -22,27 +22,25 @@ bash "Generate certificate" do
         openssl genrsa -out CA.key 2048 -des3
         openssl req -x509 -sha256 -new -nodes -key CA.key -days 365 -out CA.crt -subj "/CN=Generated Propel CA"
         openssl genrsa -des3 -passout "pass:propel2014" -out private.key.pem 2048
-        openssl req -new -sha256 -passin "pass:propel2014" -subj "/CN=#{node.hostname}.hp.com" -key private.key.pem -out propel_host.key.csr
+        openssl req -new -sha256 -passin "pass:propel2014" -subj "/CN=#{node.fqdn}" -key private.key.pem -out propel_host.key.csr
         openssl rsa -passin "pass:propel2014" -in private.key.pem -out propel_host.key.rsa
         openssl x509 -req -sha256 -in propel_host.key.csr -CA CA.crt -CAkey CA.key -CAcreateserial -days 365 > propel_host.crt
     EOH
-#        action :nothing
 end
 
 #Configure nginx configuration file for reserve proxy
-if node.ipaddress == node[:propel_nginx][:nginx_ha_master]
+if node.hostname == node[:propel_nginx][:nginx_ha_master]
     priority = 100
     state = "MASTER"
 end
 
 
-if node.ipaddress == node[:propel_nginx][:nginx_ha_backup]
+if node.hostname == node[:propel_nginx][:nginx_ha_backup]
      priority = 90
      state = "BACKUP"
 end
 
 #Restart nginx to take configuration effect.
-
 service "nginx" do
 #  supports :start => true, :stop => true, :restart => true
   action [ :restart ]
@@ -67,7 +65,6 @@ end
 cookbook_file '/etc/keepalived/check-nginx.sh' do
    source 'check-nginx.sh'
    mode '0755'
-#   notifies :restart, "service[keepalived]", :immediately 
   end
 
 execute "Restart keepalived" do

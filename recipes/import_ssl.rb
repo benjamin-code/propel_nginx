@@ -18,7 +18,7 @@ if ( node.ipaddress =~ /30.161(.*)/ )
       	then
       keytool -importcert -file /tmp/ssl_crt/propel-ha-2.hp.com_propel_host.crt -keystore /opt/hp/propel/security/propel.truststore -alias "propel-ha-2.hp.com" -storepass "propel2014" -noprompt
       fi
-      if ! keytool -list -keystore /opt/hp/propel/security/propel.truststore -storepass "propel2014" | grep -q propel-ha-1
+      if ! keytool -list -keystore /opt/hp/propel/security/propel.truststore -storepass "propel2014" | grep -q propel-ha-9
       	then
       keytool -importcert -file /tmp/ssl_crt/propel-ha-9.hp.com_propel_host.crt -keystore /opt/hp/propel/security/propel.truststore -alias "propel-ha-9.hp.com" -storepass "propel2014" -noprompt
       fi
@@ -38,7 +38,7 @@ else
       	then
       keytool -importcert -file /tmp/ssl_crt/propel-ha-2.hp.com_propel_host.crt -keystore /opt/hp/propel/security/propel.truststore -alias "propel-ha-2.hp.com" -storepass "propel2014" -noprompt
       fi
-      if ! keytool -list -keystore /opt/hp/propel/security/propel.truststore -storepass "propel2014" | grep -q propel-ha-1
+      if ! keytool -list -keystore /opt/hp/propel/security/propel.truststore -storepass "propel2014" | grep -q propel-ha-9
       	then
       keytool -importcert -file /tmp/ssl_crt/propel-ha-9.hp.com_propel_host.crt -keystore /opt/hp/propel/security/propel.truststore -alias "propel-ha-9.hp.com" -storepass "propel2014" -noprompt
       fi

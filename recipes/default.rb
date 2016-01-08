@@ -29,14 +29,14 @@ dirlist=["/etc/nginx","/etc/nginx/ssl","/etc/nginx/conf.d" ]
   end
 end   
 
-if node.ipaddress == node[:propel_nginx][:nginx_for_ui]
+if node.hostname == node[:propel_nginx][:nginx_for_ui]
   include_recipe "propel_nginx::nginx_lb"
 end
 
-if node.ipaddress == node[:propel_nginx][:nginx_ha_master]
+if node.hostname == node[:propel_nginx][:nginx_ha_master]
   include_recipe "propel_nginx::nginx_ha"
 end
 
-if node.ipaddress == node[:propel_nginx][:nginx_ha_backup]
+if node.hostname == node[:propel_nginx][:nginx_ha_backup]
   include_recipe "propel_nginx::nginx_ha"
 end

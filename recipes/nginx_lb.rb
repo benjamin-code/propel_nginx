@@ -8,12 +8,6 @@
 #
 #
 
-#template "/etc/yum.repos.d/propel.repo" do
-#   source "propel.repo.erb"
-#   mode "0755"   
-#   variables({ :repo_url => node[:propel_nginx][:repo_url] })
-#end
-
 #Configure nginx configuration file for reserve proxy
 template "/etc/nginx/conf.d/default.conf" do
    source "nginx.ui.conf.erb"
@@ -35,23 +29,6 @@ bash "Generate certificate" do
         openssl x509 -req -sha256 -in propel_host.key.csr -CA CA.crt -CAkey CA.key -CAcreateserial -days 365 > propel_host.crt
     EOH
 end
-
-#cookbook_file '/etc/nginx/ssl-propel-ha-1.tar.gz' do
-#   source 'ssl-propel-ha-1.tar.gz'
-#   mode '0755'
-#  end
-#execute "Extract ssl" do
-#   user "root"
-#   cwd  "/etc/nginx"
-#   command "tar zxf ssl-propel-ha-1.tar.gz"
-#end
-
-#Restart nginx to take configuration effect.
-#execute "restart_nginx" do
-#   user "root"
-#   command "nginx -s quit & nginx"
-#   command "nginx -s quit & nginx"
-#end
 
 service "nginx" do
 #  supports :start => true, :stop => true, :restart => true
