@@ -19,6 +19,11 @@ yum_package 'nginx' do
   flush_cache [ :before ]
 end
 
+service 'nginx' do
+    service_name 'nginx'
+  action [:enable, :start]
+end
+
 #Generate certificate for nginx reserve proxy
 
 dirlist=["/etc/nginx","/etc/nginx/ssl","/etc/nginx/conf.d" ]

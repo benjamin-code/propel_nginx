@@ -14,11 +14,13 @@ template "/etc/nginx/conf.d/default.conf" do
       :upstream_2 => node[:propel_nginx][:propel_backend_2],
       :server_name => node.hostname
     })
+      notifies :run, "bash[Generate-certificate]"
       notifies :restart, "service[nginx]"
 end
 
-bash "Generate certificate" do
+bash "Generate-certificate" do
     cwd "/etc/nginx/ssl"
+    action  :nothing
     code <<-EOH
         openssl genrsa -out CA.key 2048 -des3
         openssl req -x509 -sha256 -new -nodes -key CA.key -days 365 -out CA.crt -subj "/CN=Generated Propel CA"
@@ -27,18 +29,6 @@ bash "Generate certificate" do
         openssl rsa -passin "pass:propel2014" -in private.key.pem -out propel_host.key.rsa
         openssl x509 -req -sha256 -in propel_host.key.csr -CA CA.crt -CAkey CA.key -CAcreateserial -days 365 > propel_host.crt
     EOH
-end
-
-#Upload SSL cert to node attribute
-ruby_block "SSL cert uploading" do
-  block do
-    if File.exists?("/etc/nginx/ssl/propel_host.crt")
-      f = File.open("/etc/nginx/ssl/propel_host.crt")
-      node.set["ssl_cert"] = f.read
-            puts f.read
-      f.close
-    end
-  end
 end
 
 #Configure nginx configuration file for reserve proxy
@@ -57,6 +47,11 @@ yum_package 'keepalived' do
   flush_cache [ :before ]
 end
 
+service 'keepalived' do
+    service_name 'keepalived'
+  action [:enable, :start]
+end
+
 template "/etc/keepalived/keepalived.conf" do
    source "keepalived.conf"
    variables ({
@@ -72,4 +67,5 @@ end
 cookbook_file '/etc/keepalived/check-nginx.sh' do
    source 'check-nginx.sh'
    mode '0755'
+   action :create_if_missing
   end
