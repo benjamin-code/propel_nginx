@@ -10,10 +10,11 @@
 template "/etc/nginx/conf.d/default.conf" do
     source "nginx.backend.conf.erb"
     variables ({
-      :upstream_1 => node[:propel_nginx][:propel_ui_1],
-      :upstream_2 => node[:propel_nginx][:propel_ui_2],
+      :upstream_1 => node[:propel_nginx][:propel_backend_1],
+      :upstream_2 => node[:propel_nginx][:propel_backend_2],
       :server_name => node.hostname
     })
+      notifies :restart, "service[nginx]"
 end
 
 bash "Generate certificate" do
@@ -31,11 +32,10 @@ end
 #Upload SSL cert to node attribute
 ruby_block "SSL cert uploading" do
   block do
-puts "hello"
     if File.exists?("/etc/nginx/ssl/propel_host.crt")
       f = File.open("/etc/nginx/ssl/propel_host.crt")
-      puts f.read
       node.set["ssl_cert"] = f.read
+            puts f.read
       f.close
     end
   end
@@ -47,16 +47,9 @@ if node.hostname == node[:propel_nginx][:nginx_ha_master]
     state = "MASTER"
 end
 
-
 if node.hostname == node[:propel_nginx][:nginx_ha_backup]
      priority = 90
      state = "BACKUP"
-end
-
-#Restart nginx to take configuration effect.
-service "nginx" do
-#  supports :start => true, :stop => true, :restart => true
-  action [ :restart ]
 end
 
 yum_package 'keepalived' do
@@ -72,15 +65,11 @@ template "/etc/keepalived/keepalived.conf" do
     :priority => priority,
     :vip => node[:propel_nginx][:vip],
     :state => state
-    })  
+    }) 
+          notifies :restart, "service[keepalived]" 
 end
 
 cookbook_file '/etc/keepalived/check-nginx.sh' do
    source 'check-nginx.sh'
    mode '0755'
   end
-
-execute "Restart keepalived" do
-   user "root"
-   command "service keepalived restart"
-end

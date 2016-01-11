@@ -16,6 +16,7 @@ template "/etc/nginx/conf.d/default.conf" do
      :upstream_2 => node[:propel_nginx][:propel_ui_2],
      :server_name => node.hostname
    })
+         notifies :restart, "service[nginx]"
 end
 
 bash "Generate certificate" do
@@ -40,9 +41,4 @@ ruby_block "SSL cert uploading" do
       f.close
     end
   end
-end
-
-service "nginx" do
-#  supports :start => true, :stop => true, :restart => true
-  action [ :restart ]
 end
