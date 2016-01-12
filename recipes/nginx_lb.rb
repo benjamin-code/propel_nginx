@@ -32,3 +32,13 @@ bash "Generate-certificate" do
         openssl x509 -req -sha256 -in propel_host.key.csr -CA CA.crt -CAkey CA.key -CAcreateserial -days 365 > propel_host.crt
     EOH
 end
+
+ruby_block "SSL cert uploading" do
+  block do
+    if File.exists?("/etc/nginx/ssl/propel_host.crt")
+      f = File.open("/etc/nginx/ssl/propel_host.crt")
+      node.normal["ssl_cert"] = f.read
+      f.close
+    end
+  end
+end
