@@ -8,11 +8,10 @@
 #
 #
 
-#template "/etc/yum.repos.d/propel.repo" do
-#   source "propel.repo.erb"
-#   mode "0755"   
-#   variables({ :repo_url => node[:propel_nginx][:repo_url] })
-#end
+cookbook_file '/etc/yum.repos.d/nginx.repo' do
+  source 'nginx.repo'
+  mode '0644'
+end
 
 yum_package 'nginx' do
   action :install
