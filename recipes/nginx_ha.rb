@@ -14,8 +14,9 @@ template "/etc/nginx/conf.d/default.conf" do
       :upstream_2 => node[:propel_nginx][:propel_backend_2],
       :server_name => node.hostname
     })
-      notifies :run, "bash[Generate-certificate]"
-      notifies :restart, "service[nginx]"
+     notifies :run, "bash[Generate-certificate]", :immediately
+     notifies :restart, "service[nginx]", :immediately
+     notifies :run, 'ruby_block[SSL cert uploading]', :immediately
 end
 
 bash "Generate-certificate" do
@@ -39,6 +40,7 @@ ruby_block "SSL cert uploading" do
       f.close
     end
   end
+    action  :nothing
 end
 
 #Configure nginx configuration file for reserve proxy
