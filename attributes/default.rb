@@ -30,6 +30,6 @@ default[:propel_nginx][:propel_ui_1] = "propel-ha-3"
 default[:propel_nginx][:propel_ui_2] = "propel-ha-4"
 default[:propel_nginx][:propel_backend_1] = "propel-ha-5"
 default[:propel_nginx][:propel_backend_2] = "propel-ha-6"
-default[:propel_nginx][:vip] = "30.161.224.149/24"
+default[:propel_nginx][:vip] = "30.161.224.149"
 end
 
