@@ -7,7 +7,7 @@
 # All rights reserved - Do Not Redistribute
 #
 #  
-template "/etc/nginx/conf.d/default.conf" do
+template "/etc/nginx/conf.d/propel.conf" do
     source "nginx.backend.conf.erb"
     variables ({
       :upstream_1 => node[:propel_nginx][:propel_backend_1],
@@ -16,7 +16,6 @@ template "/etc/nginx/conf.d/default.conf" do
     })
      notifies :run, "bash[Generate-certificate]", :immediately
      notifies :restart, "service[nginx]", :immediately
-     notifies :run, 'ruby_block[SSL cert uploading]', :immediately
 end
 
 bash "Generate-certificate" do

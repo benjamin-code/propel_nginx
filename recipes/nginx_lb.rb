@@ -9,7 +9,7 @@
 #
 
 #Configure nginx configuration file for reserve proxy
-template "/etc/nginx/conf.d/default.conf" do
+template "/etc/nginx/conf.d/propel.conf" do
    source "nginx.ui.conf.erb"
    variables ({
      :upstream_1 => node[:propel_nginx][:propel_ui_1],
@@ -19,8 +19,6 @@ template "/etc/nginx/conf.d/default.conf" do
    })
      notifies :run, "bash[Generate-certificate]", :immediately
      notifies :restart, "service[nginx]", :immediately
-     notifies :run, 'ruby_block[SSL cert uploading]', :immediately
-
 end
 
 bash "Generate-certificate" do
