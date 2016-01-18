@@ -41,8 +41,7 @@ upstream catalogui_backends {
 }
 upstream idm_backends {
     ip_hash;
-    server <%= @upstream_1 %>:9600;
-    server <%= @upstream_2 %>:9600;
+    server <%= @vip %>:9600;
 }
 upstream subscriptionui_backends {
     ip_hash;

@@ -14,6 +14,7 @@ template "/etc/nginx/conf.d/default.conf" do
    variables ({
      :upstream_1 => node[:propel_nginx][:propel_ui_1],
      :upstream_2 => node[:propel_nginx][:propel_ui_2],
+     :vip => node[:propel_nginx][:vip],
      :server_name => node.hostname
    })
      notifies :run, "bash[Generate-certificate]", :immediately
@@ -33,15 +34,4 @@ bash "Generate-certificate" do
         openssl rsa -passin "pass:propel2014" -in private.key.pem -out propel_host.key.rsa
         openssl x509 -req -sha256 -in propel_host.key.csr -CA CA.crt -CAkey CA.key -CAcreateserial -days 365 > propel_host.crt
     EOH
-end
-
-ruby_block "SSL cert uploading" do
-  block do
-    if File.exists?("/etc/nginx/ssl/propel_host.crt")
-      f = File.open("/etc/nginx/ssl/propel_host.crt")
-      node.normal["ssl_cert"] = f.read
-      f.close
-    end
-  end
-    action  :nothing
 end
