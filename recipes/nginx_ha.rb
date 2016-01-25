@@ -32,40 +32,39 @@ bash "Generate-certificate" do
 end
 
 #Configure nginx configuration file for reserve proxy
-if node.hostname == node[:propel_nginx][:nginx_ha_master]
-    priority = 100
-    state = "MASTER"
-end
+#if node.hostname == node[:propel_nginx][:nginx_ha_master]
+#    priority = 100
+#    state = "MASTER"
+#end
 
-if node.hostname == node[:propel_nginx][:nginx_ha_backup]
-     priority = 90
-     state = "BACKUP"
-end
+#if node.hostname == node[:propel_nginx][:nginx_ha_backup]
+#     priority = 90
+#     state = "BACKUP"
+#end
 
-yum_package 'keepalived' do
-  action :install
-  flush_cache [ :before ]
-end
+#yum_package 'keepalived' do
+#  action :install
+#  flush_cache [ :before ]
+#end
 
-service 'keepalived' do
-    service_name 'keepalived'
-  action [:enable, :start]
-end
+#service 'keepalived' do
+#    service_name 'keepalived'
+#  action [:enable, :start]
+#end
 
-template "/etc/keepalived/keepalived.conf" do
-   source "keepalived.conf"
-   variables ({
-#    :server_name => node.hostname
-    :router_id => node.hostname,
-    :priority => priority,
-    :vip => node[:propel_nginx][:vip],
-    :state => state
-    }) 
-          notifies :restart, "service[keepalived]" 
-end
+#template "/etc/keepalived/keepalived.conf" do
+#   source "keepalived.conf"
+#   variables ({
+#    :router_id => node.hostname,
+#    :priority => priority,
+#    :vip => node[:propel_nginx][:vip],
+#    :state => state
+#    }) 
+#          notifies :restart, "service[keepalived]" 
+#end
 
-cookbook_file '/etc/keepalived/check-nginx.sh' do
-   source 'check-nginx.sh'
-   mode '0755'
-   action :create_if_missing
-  end
+#cookbook_file '/etc/keepalived/check-nginx.sh' do
+#   source 'check-nginx.sh'
+#   mode '0755'
+#   action :create_if_missing
+#  end

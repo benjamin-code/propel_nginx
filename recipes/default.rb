@@ -8,15 +8,15 @@
 #
 #
 
-cookbook_file '/etc/yum.repos.d/nginx.repo' do
-  source 'nginx.repo'
-  mode '0644'
-end
+#cookbook_file '/etc/yum.repos.d/nginx.repo' do
+#  source 'nginx.repo'
+#  mode '0644'
+#end
 
-yum_package 'nginx' do
-  action :install
-  flush_cache [ :before ]
-end
+#yum_package 'nginx' do
+#  action :install
+#  flush_cache [ :before ]
+#end
 
 service 'nginx' do
     service_name 'nginx'
