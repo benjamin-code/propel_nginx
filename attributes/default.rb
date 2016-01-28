@@ -1,8 +1,8 @@
-if ( node.hostname =~ /atc(.*)/ )
+if ( node.hostname =~ /cr(.*)/ )
   puts "This is the Prod environment."
 #default[:propel_nginx][:nginx_for_ui] = ""
-default[:propel_nginx][:nginx_ha_master] = "atc-cr-iweb6"
-default[:propel_nginx][:nginx_ha_backup] = "atc-cr-iweb7"
+default[:propel_nginx][:nginx_ha_master] = "atc-cr-iweb4"
+default[:propel_nginx][:nginx_ha_backup] = "atc-cr-iweb5"
 default[:propel_nginx][:propel_ui_1] = "propel-ha-3"
 default[:propel_nginx][:propel_ui_2] = "propel-ha-4"
 default[:propel_nginx][:propel_backend_1] = "propel-ha-3"
@@ -10,7 +10,7 @@ default[:propel_nginx][:propel_backend_2] = "propel-ha-4"
 #default[:propel_nginx][:vip] = "30.161.224.210/24" #Need to set VIP of Prod env..
 end
 
-if ( node.hostname =~ /propel-ha(.*)/ )
+if node.chef_environment == 'sandbox'
   puts "This is the N1 environment."
 default[:propel_nginx][:nginx_for_ui] = "propel-ha-1"
 default[:propel_nginx][:nginx_ha_master] = "propel-ha-2"
@@ -22,7 +22,7 @@ default[:propel_nginx][:propel_backend_2] = "propel-ha-6"
 default[:propel_nginx][:vip] = "30.161.224.149"
 end
 
-if ( node.hostname =~ /pln(.*)/ )
+if node.chef_environment == 'env1'
   puts "This is the FT1 environment."
 #default[:propel_nginx][:nginx_for_ui] = "propel-ha-1"
 default[:propel_nginx][:nginx_ha_master] = "pln-cd1-iweb8"
