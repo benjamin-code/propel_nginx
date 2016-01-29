@@ -33,14 +33,43 @@ dirlist=["/etc/nginx","/etc/nginx/ssl","/etc/nginx/conf.d" ]
   end
 end   
 
-if node.hostname == node[:propel_nginx][:nginx_for_ui]
-  include_recipe "propel_nginx::nginx_lb"
+template "/etc/nginx/conf.d/propel.conf" do
+    source "nginx.n1.conf.erb"
+    variables ({
+      :upstream_1 => node[:propel_nginx][:propel_backend_1],
+      :upstream_2 => node[:propel_nginx][:propel_backend_2],
+      :server_name => node.hostname
+    })
+     only_if { node.hostname =~ /propel-ha(.*)/  }
+     notifies :run, "bash[Generate-certificate]", :immediately
+     notifies :restart, "service[nginx]", :immediately
+
 end
 
-if node.hostname == node[:propel_nginx][:nginx_ha_master]
-  include_recipe "propel_nginx::nginx_ha"
+bash "Generate-certificate" do
+    cwd "/etc/nginx/ssl"
+    action  :nothing
+    code <<-EOH
+        openssl genrsa -out CA.key 2048 -des3
+        openssl req -x509 -sha256 -new -nodes -key CA.key -days 365 -out CA.crt -subj "/CN=Generated Propel CA"
+        openssl genrsa -des3 -passout "pass:propel2014" -out private.key.pem 2048
+        openssl req -new -sha256 -passin "pass:propel2014" -subj "/CN=#{node.fqdn}" -key private.key.pem -out propel_host.key.csr
+        openssl rsa -passin "pass:propel2014" -in private.key.pem -out propel_host.key.rsa
+        openssl x509 -req -sha256 -in propel_host.key.csr -CA CA.crt -CAkey CA.key -CAcreateserial -days 365 > propel_host.crt
+    EOH
 end
 
-if node.hostname == node[:propel_nginx][:nginx_ha_backup]
-  include_recipe "propel_nginx::nginx_ha"
+template "/etc/nginx/conf.d/propel.conf" do
+    source "nginx.prod.conf.erb"
+    variables ({
+      :upstream_1 => node[:propel_nginx][:propel_backend_1],
+      :upstream_2 => node[:propel_nginx][:propel_backend_2],
+      :upstream_3 => node[:propel_nginx][:propel_backend_3],
+      :upstream_4 => node[:propel_nginx][:propel_backend_4],
+      :crtfile => "/etc/ssl/certs/portlet_nginx.crt",
+      :keyfile => "/etc/ssl/certs/portlet_nginx.key",
+      :server_name => node.hostname
+    })
+     only_if { node.hostname =~ /cr(.*)/  }
+     notifies :restart, "service[nginx]", :immediately
 end
