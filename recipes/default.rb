@@ -8,22 +8,10 @@
 #
 #
 
-#cookbook_file '/etc/yum.repos.d/nginx.repo' do
-#  source 'nginx.repo'
-#  mode '0644'
-#end
-
-#yum_package 'nginx' do
-#  action :install
-#  flush_cache [ :before ]
-#end
-
 service 'nginx' do
     service_name 'nginx'
   action [:enable, :start]
 end
-
-#Generate certificate for nginx reserve proxy
 
 dirlist=["/etc/nginx","/etc/nginx/ssl","/etc/nginx/conf.d" ]
   dirlist.each do |dir| 
@@ -40,10 +28,9 @@ template "/etc/nginx/conf.d/propel.conf" do
       :upstream_2 => node[:propel_nginx][:propel_backend_2],
       :server_name => node.hostname
     })
-     only_if { node.hostname =~ /propel-ha(.*)/  }
+     only_if { node.chef_environment == 'sandbox' }
      notifies :run, "bash[Generate-certificate]", :immediately
      notifies :restart, "service[nginx]", :immediately
-
 end
 
 bash "Generate-certificate" do
@@ -68,8 +55,8 @@ template "/etc/nginx/conf.d/propel.conf" do
       :keyfile => "/etc/ssl/certs/portlet_nginx.key",
       :server_name => node.hostname
     })
-     only_if { node.hostname =~ /pln(.*)/  }
-     notifies :restart, "service[nginx]", :immediately
+        only_if { node.chef_environment == 'env1' }
+        notifies :restart, "service[nginx]", :immediately
 end
 
 template "/etc/nginx/conf.d/propel.conf" do
@@ -83,6 +70,6 @@ template "/etc/nginx/conf.d/propel.conf" do
       :keyfile => "/etc/ssl/certs/portlet_nginx.key",
       :server_name => node.hostname
     })
-     only_if { node.hostname =~ /cr(.*)/  }
+     only_if { node.chef_environment == 'prod' }
      notifies :restart, "service[nginx]", :immediately
 end
