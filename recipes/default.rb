@@ -60,6 +60,19 @@ bash "Generate-certificate" do
 end
 
 template "/etc/nginx/conf.d/propel.conf" do
+    source "nginx.ft.conf.erb"
+    variables ({
+      :upstream_1 => node[:propel_nginx][:propel_backend_1],
+      :upstream_2 => node[:propel_nginx][:propel_backend_2],
+      :crtfile => "/etc/ssl/certs/portlet_nginx.crt",
+      :keyfile => "/etc/ssl/certs/portlet_nginx.key",
+      :server_name => node.hostname
+    })
+     only_if { node.hostname =~ /pln(.*)/  }
+     notifies :restart, "service[nginx]", :immediately
+end
+
+template "/etc/nginx/conf.d/propel.conf" do
     source "nginx.prod.conf.erb"
     variables ({
       :upstream_1 => node[:propel_nginx][:propel_backend_1],

@@ -1,0 +1,127 @@
+upstream catalog_backends {
+    ip_hash;
+    server <%= @upstream_1 %>:9510;
+    server <%= @upstream_2 %>:9510;
+}
+
+upstream oo_backends {
+    ip_hash;
+    server <%= @upstream_1 %>:8080;
+    server <%= @upstream_2 %>:8080;
+}
+
+upstream sx_backends{
+    ip_hash;
+    server <%= @upstream_1 %>:9444;
+    server <%= @upstream_2 %>:9444;
+}
+
+upstream subscription_backends {
+    ip_hash;
+    server <%= @upstream_1 %>:9595;
+    server <%= @upstream_2 %>:9595;
+}
+
+upstream diagnostics_backends {
+    ip_hash;
+    server <%= @upstream_1 %>:9810;
+    server <%= @upstream_2 %>:9810;
+}
+
+upstream idm_backends {
+    ip_hash;
+    server <%= @upstream_1 %>:9600;
+    server <%= @upstream_2 %>:9600;
+}
+
+
+
+server {
+    listen 9510 ssl; # 'ssl' parameter tells NGINX to decrypt the traffic
+    location / {
+        proxy_pass https://catalog_backends;
+        proxy_set_header Host $host:9510;
+        proxy_set_header X-Real-IP $remote_addr:9510;
+    }
+    server_name <%= @server_name %>;
+    ssl on;
+    ssl_certificate <%= @crtfile %>;
+    ssl_certificate_key <%= @keyfile %>;
+    ssl_session_cache shared:SSL:10m;
+    ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+    ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:ECDHE-RSA-AES128-GCM-SHA256:AES256+EECDH:DHE-RSA-AES128-GCM-SHA256:AES256+EDH:ECDHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA:ECDHE-RSA-AES128-SHA:DHE-RSA-AES256-SHA256:DHE-RSA-AES128-SHA256:DHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA:ECDHE-RSA-DES-CBC3-SHA:EDH-RSA-DES-CBC3-SHA:AES256-GCM-SHA384:AES128-GCM-SHA256:AES256-SHA256:AES128-SHA256:AES256-SHA:AES128-SHA:DES-CBC3-SHA:HIGH:!aNULL:!eNULL:!EXPORT:!DES:!MD5:!PSK:!RC4";
+}
+
+server {
+    listen 8080;
+    location / {
+        proxy_pass http://oo_backends;
+        proxy_set_header Host $host:8080;
+        proxy_set_header X-Real-IP $remote_addr:8080;
+    }
+    server_name <%= @server_name %>;
+}
+
+server {
+    listen 9444 ssl; # 'ssl' parameter tells NGINX to decrypt the traffic
+    location / {
+        proxy_pass https://sx_backends;
+        proxy_set_header Host $host:9444;
+        proxy_set_header X-Real-IP $remote_addr:9444;
+    }
+    server_name <%= @server_name %>;
+    ssl on;
+    ssl_certificate <%= @crtfile %>;
+    ssl_certificate_key <%= @keyfile %>;
+    ssl_session_cache shared:SSL:10m;
+    ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+    ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:ECDHE-RSA-AES128-GCM-SHA256:AES256+EECDH:DHE-RSA-AES128-GCM-SHA256:AES256+EDH:ECDHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA:ECDHE-RSA-AES128-SHA:DHE-RSA-AES256-SHA256:DHE-RSA-AES128-SHA256:DHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA:ECDHE-RSA-DES-CBC3-SHA:EDH-RSA-DES-CBC3-SHA:AES256-GCM-SHA384:AES128-GCM-SHA256:AES256-SHA256:AES128-SHA256:AES256-SHA:AES128-SHA:DES-CBC3-SHA:HIGH:!aNULL:!eNULL:!EXPORT:!DES:!MD5:!PSK:!RC4";
+}
+
+server {
+    listen 9595 ssl; # 'ssl' parameter tells NGINX to decrypt the traffic
+    location / {
+        proxy_pass https://subscription_backends;
+        proxy_set_header Host $host:9595;
+        proxy_set_header X-Real-IP $remote_addr:9595;
+    }
+    server_name <%= @server_name %>;
+    ssl on;
+    ssl_certificate <%= @crtfile %>;
+    ssl_certificate_key <%= @keyfile %>;
+    ssl_session_cache shared:SSL:10m;
+    ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+    ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:ECDHE-RSA-AES128-GCM-SHA256:AES256+EECDH:DHE-RSA-AES128-GCM-SHA256:AES256+EDH:ECDHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA:ECDHE-RSA-AES128-SHA:DHE-RSA-AES256-SHA256:DHE-RSA-AES128-SHA256:DHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA:ECDHE-RSA-DES-CBC3-SHA:EDH-RSA-DES-CBC3-SHA:AES256-GCM-SHA384:AES128-GCM-SHA256:AES256-SHA256:AES128-SHA256:AES256-SHA:AES128-SHA:DES-CBC3-SHA:HIGH:!aNULL:!eNULL:!EXPORT:!DES:!MD5:!PSK:!RC4";
+}
+
+server {
+    listen 9600 ssl; # 'ssl' parameter tells NGINX to decrypt the traffic
+    location / {
+        proxy_pass https://idm_backends;
+        proxy_set_header Host $host:9600;
+        proxy_set_header X-Real-IP $remote_addr:9600;
+    }
+    server_name <%= @server_name %>;
+    ssl on;
+    ssl_certificate <%= @crtfile %>;
+    ssl_certificate_key <%= @keyfile %>;
+    ssl_session_cache shared:SSL:10m;
+    ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+    ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:ECDHE-RSA-AES128-GCM-SHA256:AES256+EECDH:DHE-RSA-AES128-GCM-SHA256:AES256+EDH:ECDHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA:ECDHE-RSA-AES128-SHA:DHE-RSA-AES256-SHA256:DHE-RSA-AES128-SHA256:DHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA:ECDHE-RSA-DES-CBC3-SHA:EDH-RSA-DES-CBC3-SHA:AES256-GCM-SHA384:AES128-GCM-SHA256:AES256-SHA256:AES128-SHA256:AES256-SHA:AES128-SHA:DES-CBC3-SHA:HIGH:!aNULL:!eNULL:!EXPORT:!DES:!MD5:!PSK:!RC4";
+}
+
+server {
+    listen 9810 ssl; # 'ssl' parameter tells NGINX to decrypt the traffic
+    location / {
+        proxy_pass https://diagnostics_backends;
+        proxy_set_header Host $host:9810;
+        proxy_set_header X-Real-IP $remote_addr:9810;
+    }
+    server_name <%= @server_name %>;
+    ssl on;
+    ssl_certificate <%= @crtfile %>;
+    ssl_certificate_key <%= @keyfile %>;
+    ssl_session_cache shared:SSL:10m;
+    ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+    ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:ECDHE-RSA-AES128-GCM-SHA256:AES256+EECDH:DHE-RSA-AES128-GCM-SHA256:AES256+EDH:ECDHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA:ECDHE-RSA-AES128-SHA:DHE-RSA-AES256-SHA256:DHE-RSA-AES128-SHA256:DHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA:ECDHE-RSA-DES-CBC3-SHA:EDH-RSA-DES-CBC3-SHA:AES256-GCM-SHA384:AES128-GCM-SHA256:AES256-SHA256:AES128-SHA256:AES256-SHA:AES128-SHA:DES-CBC3-SHA:HIGH:!aNULL:!eNULL:!EXPORT:!DES:!MD5:!PSK:!RC4";
+}

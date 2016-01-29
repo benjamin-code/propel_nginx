@@ -1,9 +1,9 @@
-if ( node.hostname =~ /atc(.*)/ )
+if ( node.hostname =~ /cr(.*)/ )
   puts "This is the Prod environment."
 default[:propel_nginx][:propel_backend_1] = "act-cr-wls3"
-default[:propel_nginx][:propel_backend_2] = "act-cr-wls3"
+default[:propel_nginx][:propel_backend_2] = "act-cr-wls4"
 default[:propel_nginx][:propel_backend_3] = "swa-cr-wls3"
-default[:propel_nginx][:propel_backend_4] = "swa-cr-wls3"
+default[:propel_nginx][:propel_backend_4] = "swa-cr-wls4"
 end
 
 if ( node.hostname =~ /propel-ha(.*)/ )
