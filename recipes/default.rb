@@ -33,26 +33,14 @@ template "/etc/nginx/conf.d/propel.conf" do
      notifies :restart, "service[nginx]", :immediately
 end
 
-bash "Generate-certificate" do
-    cwd "/etc/nginx/ssl"
-    action  :nothing
-    code <<-EOH
-        openssl genrsa -out CA.key 2048 -des3
-        openssl req -x509 -sha256 -new -nodes -key CA.key -days 365 -out CA.crt -subj "/CN=Generated Propel CA"
-        openssl genrsa -des3 -passout "pass:propel2014" -out private.key.pem 2048
-        openssl req -new -sha256 -passin "pass:propel2014" -subj "/CN=#{node.fqdn}" -key private.key.pem -out propel_host.key.csr
-        openssl rsa -passin "pass:propel2014" -in private.key.pem -out propel_host.key.rsa
-        openssl x509 -req -sha256 -in propel_host.key.csr -CA CA.crt -CAkey CA.key -CAcreateserial -days 365 > propel_host.crt
-    EOH
-end
 
 template "/etc/nginx/conf.d/propel.conf" do
     source "nginx.ft.conf.erb"
     variables ({
       :upstream_1 => node[:propel_nginx][:propel_backend_1],
       :upstream_2 => node[:propel_nginx][:propel_backend_2],
-      :crtfile => "/etc/ssl/certs/portlet_nginx.crt",
-      :keyfile => "/etc/ssl/certs/portlet_nginx.key",
+      :crtfile => "/etc/nginx/ssl/propel_env1.crt",
+      :keyfile => "/etc/nginx/ssl/propel_env1.key",
       :server_name => node.hostname
     })
         only_if { node.chef_environment == 'env1' }
@@ -66,9 +54,8 @@ template "/etc/nginx/conf.d/propel.conf" do
       :upstream_2 => node[:propel_nginx][:propel_backend_2],
       :upstream_3 => node[:propel_nginx][:propel_backend_3],
       :upstream_4 => node[:propel_nginx][:propel_backend_4],
-      :crtfile => "/etc/ssl/certs/portlet_nginx.crt",
-      :keyfile => "/etc/ssl/certs/portlet_nginx.key",
-      :server_name => node.hostname
+      :crtfile => "/etc/nginx/ssl/propel_prod.crt",
+      :keyfile => "/etc/nginx/ssl/propel_prod.key",
     })
      only_if { node.chef_environment == 'prod' }
      notifies :restart, "service[nginx]", :immediately
