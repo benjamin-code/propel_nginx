@@ -11,6 +11,14 @@ dirlist=["/etc/nginx","/etc/nginx/ssl","/etc/nginx/conf.d" ]
   end
 end   
 
+cookbook_file '/etc/nginx/ssl/propel_sandbox.crt' do
+  source 'propel_sandbox.crt'
+  mode '0755'
+end
+cookbook_file '/etc/nginx/ssl/propel_sandbox.key' do
+  source 'propel_sandbox.key'
+  mode '0755'
+end
 
 template "/etc/nginx/conf.d/propel.conf" do
     source "nginx-idm.conf.erb"

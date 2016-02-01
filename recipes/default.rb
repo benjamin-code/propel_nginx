@@ -21,15 +21,25 @@ dirlist=["/etc/nginx","/etc/nginx/ssl","/etc/nginx/conf.d" ]
   end
 end   
 
+cookbook_file '/etc/nginx/ssl/propel_sandbox.crt' do
+  source 'propel_sandbox.crt'
+  mode '0755'
+end
+cookbook_file '/etc/nginx/ssl/propel_sandbox.key' do
+  source 'propel_sandbox.key'
+  mode '0755'
+end
+
 template "/etc/nginx/conf.d/propel.conf" do
     source "nginx.n1.conf.erb"
     variables ({
       :upstream_1 => node[:propel_nginx][:propel_backend_1],
       :upstream_2 => node[:propel_nginx][:propel_backend_2],
+      :crtfile => "/etc/nginx/ssl/propel_sandbox.crt",
+      :keyfile => "/etc/nginx/ssl/propel_sandbox.key",
       :server_name => node.hostname
     })
      only_if { node.chef_environment == 'sandbox' }
-     notifies :run, "bash[Generate-certificate]", :immediately
      notifies :restart, "service[nginx]", :immediately
 end
 
