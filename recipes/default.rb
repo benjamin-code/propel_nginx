@@ -8,6 +8,13 @@
 #
 #
 
+if node.chef_environment == 'sandbox'
+  service 'iptables' do
+      service_name 'iptables'
+    action  :stop
+  end
+end
+
 service 'nginx' do
     service_name 'nginx'
   action [:enable, :start]
