@@ -1,0 +1,87 @@
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number: 5 (0x5)
+    Signature Algorithm: sha1WithRSAEncryption
+        Issuer: C=US, ST=CA, L=Roseville, O=Hewlett-Packard Company, CN=Hewlett-Packard Private Class 2 Certification Authority
+        Validity
+            Not Before: Feb  1 23:53:03 2016 GMT
+            Not After : Dec 10 23:53:03 2025 GMT
+        Subject: C=US, ST=CA, L=Roseville, O= Hewlett-Packard Company, CN=pln-cd1-ewebportal.core.eslabs.ssn.hp.com
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+                Public-Key: (2048 bit)
+                Modulus:
+                    00:c5:31:65:8d:63:8e:b0:9f:f8:22:ce:cf:04:d6:
+                    24:8b:c2:a2:5e:f1:bd:48:4d:54:57:2e:b1:e0:49:
+                    cf:4f:c4:12:9d:35:4c:cd:fb:d6:1b:7c:d0:f4:60:
+                    eb:1c:48:02:0a:50:1d:f9:90:c6:69:86:61:e5:00:
+                    0b:65:02:4d:ff:2a:e3:89:d3:aa:2a:33:00:84:7c:
+                    88:6b:7f:26:f3:98:68:51:90:b6:d9:49:6a:8b:b5:
+                    41:e4:3d:a0:97:80:14:59:18:86:fb:d6:58:40:4c:
+                    81:f6:06:6b:8b:8e:42:89:8f:27:35:39:d7:ac:a1:
+                    3d:84:82:08:db:fb:b3:af:d8:85:80:69:71:e5:df:
+                    d1:d1:c1:4a:14:7a:02:46:2b:d9:6c:f5:47:01:21:
+                    60:8d:7a:92:7f:2e:e5:30:f7:53:33:1e:07:06:c4:
+                    35:d3:27:07:56:55:3a:07:63:a7:f3:e8:90:87:c9:
+                    0e:db:e3:51:9b:68:d5:e5:c8:26:2b:56:7a:ed:e6:
+                    67:b0:e1:92:7c:0f:28:2f:85:a4:56:26:10:99:0f:
+                    1f:b4:3d:71:03:8c:52:f6:6f:83:06:99:11:88:12:
+                    9e:f5:d2:8a:a1:6c:f9:b0:c3:36:87:53:d3:92:7d:
+                    ad:13:ec:0b:64:7c:ee:bd:50:57:b2:28:64:e1:21:
+                    e9:55
+                Exponent: 65537 (0x10001)
+        X509v3 extensions:
+            X509v3 Basic Constraints: 
+                CA:FALSE
+            X509v3 Key Usage: 
+                Digital Signature, Non Repudiation, Key Encipherment
+            X509v3 Subject Alternative Name: 
+                DNS:pln-cd1-ewebportal.core.eslabs.ssn.hp.com, DNS:pln-cd1-apigw-vip.core.eslabs.ssn.hp.com, DNS:pln-cd1-iweb8.core.eslabs.ssn.hp.com, DNS:pln-cd1-iweb9.core.eslabs.ssn.hp.com, DNS:pln-cd1-eweb8.core.eslabs.ssn.hp.com, DNS:pln-cd1-eweb9.core.eslabs.ssn.hp.com, DNS:pln-cd1-iweb3.core.eslabs.ssn.hp.com, DNS:pln-cd1-iweb4.core.eslabs.ssn.hp.com, DNS:pln-cd1-hamongo1.core.eslabs.ssn.hp.com, DNS:pln-cd1-hamongo2.core.eslabs.ssn.hp.com
+    Signature Algorithm: sha1WithRSAEncryption
+         2a:d7:54:aa:79:dc:08:87:d2:65:ad:5b:9c:6f:7c:1b:32:d0:
+         58:c8:bc:66:fb:41:16:44:42:3a:68:56:f2:72:e3:68:b6:83:
+         39:9b:e3:7e:57:10:3e:a0:4f:38:c1:36:dc:5b:55:44:98:c1:
+         bd:b4:c2:0e:0d:07:2a:d4:a2:72:f3:65:93:f9:d2:b8:81:3f:
+         7f:5e:27:dc:a1:7a:c9:89:5e:7f:78:27:d3:ff:2b:e8:15:29:
+         9f:3a:1b:df:e7:2a:c0:eb:73:9e:f4:94:e2:3e:c2:70:eb:44:
+         5f:fb:58:7b:b6:71:3d:65:25:38:3f:ba:7d:58:e9:2e:d3:2d:
+         a4:52:68:49:ef:ce:c1:9e:30:8f:8c:1b:c7:ac:8b:51:fa:c5:
+         12:42:01:cd:99:74:a9:19:1c:62:0d:dc:90:f8:11:31:26:a9:
+         7a:5d:11:59:c0:fe:ab:9b:17:3f:8d:43:d1:72:f8:e7:90:e9:
+         02:fb:da:37:37:ff:a6:16:fd:c0:f3:72:ec:02:d3:20:be:0f:
+         18:f0:c1:62:fd:2b:62:3f:a1:2e:21:24:82:99:e6:4b:7d:89:
+         8e:da:b1:50:47:60:8c:f1:7e:05:c9:b7:5a:21:0d:f3:dc:c9:
+         6d:4c:72:83:3d:6a:af:38:c8:62:02:76:a8:d6:01:af:dc:76:
+         d2:ae:72:a5
+-----BEGIN CERTIFICATE-----
+MIIFTjCCBDagAwIBAgIBBTANBgkqhkiG9w0BAQUFADCBkjELMAkGA1UEBhMCVVMx
+CzAJBgNVBAgMAkNBMRIwEAYDVQQHDAlSb3NldmlsbGUxIDAeBgNVBAoMF0hld2xl
+dHQtUGFja2FyZCBDb21wYW55MUAwPgYDVQQDDDdIZXdsZXR0LVBhY2thcmQgUHJp
+dmF0ZSBDbGFzcyAyIENlcnRpZmljYXRpb24gQXV0aG9yaXR5MB4XDTE2MDIwMTIz
+NTMwM1oXDTI1MTIxMDIzNTMwM1owgYUxCzAJBgNVBAYTAlVTMQswCQYDVQQIDAJD
+QTESMBAGA1UEBwwJUm9zZXZpbGxlMSEwHwYDVQQKDBggSGV3bGV0dC1QYWNrYXJk
+IENvbXBhbnkxMjAwBgNVBAMMKXBsbi1jZDEtZXdlYnBvcnRhbC5jb3JlLmVzbGFi
+cy5zc24uaHAuY29tMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxTFl
+jWOOsJ/4Is7PBNYki8KiXvG9SE1UVy6x4EnPT8QSnTVMzfvWG3zQ9GDrHEgCClAd
++ZDGaYZh5QALZQJN/yrjidOqKjMAhHyIa38m85hoUZC22Ulqi7VB5D2gl4AUWRiG
++9ZYQEyB9gZri45CiY8nNTnXrKE9hIII2/uzr9iFgGlx5d/R0cFKFHoCRivZbPVH
+ASFgjXqSfy7lMPdTMx4HBsQ10ycHVlU6B2On8+iQh8kO2+NRm2jV5cgmK1Z67eZn
+sOGSfA8oL4WkViYQmQ8ftD1xA4xS9m+DBpkRiBKe9dKKoWz5sMM2h1PTkn2tE+wL
+ZHzuvVBXsihk4SHpVQIDAQABo4IBuDCCAbQwCQYDVR0TBAIwADALBgNVHQ8EBAMC
+BeAwggGYBgNVHREEggGPMIIBi4IpcGxuLWNkMS1ld2VicG9ydGFsLmNvcmUuZXNs
+YWJzLnNzbi5ocC5jb22CKHBsbi1jZDEtYXBpZ3ctdmlwLmNvcmUuZXNsYWJzLnNz
+bi5ocC5jb22CJHBsbi1jZDEtaXdlYjguY29yZS5lc2xhYnMuc3NuLmhwLmNvbYIk
+cGxuLWNkMS1pd2ViOS5jb3JlLmVzbGFicy5zc24uaHAuY29tgiRwbG4tY2QxLWV3
+ZWI4LmNvcmUuZXNsYWJzLnNzbi5ocC5jb22CJHBsbi1jZDEtZXdlYjkuY29yZS5l
+c2xhYnMuc3NuLmhwLmNvbYIkcGxuLWNkMS1pd2ViMy5jb3JlLmVzbGFicy5zc24u
+aHAuY29tgiRwbG4tY2QxLWl3ZWI0LmNvcmUuZXNsYWJzLnNzbi5ocC5jb22CJ3Bs
+bi1jZDEtaGFtb25nbzEuY29yZS5lc2xhYnMuc3NuLmhwLmNvbYIncGxuLWNkMS1o
+YW1vbmdvMi5jb3JlLmVzbGFicy5zc24uaHAuY29tMA0GCSqGSIb3DQEBBQUAA4IB
+AQAq11SqedwIh9JlrVucb3wbMtBYyLxm+0EWREI6aFbycuNotoM5m+N+VxA+oE84
+wTbcW1VEmMG9tMIODQcq1KJy82WT+dK4gT9/XifcoXrJiV5/eCfT/yvoFSmfOhvf
+5yrA63Oe9JTiPsJw60Rf+1h7tnE9ZSU4P7p9WOku0y2kUmhJ787BnjCPjBvHrItR
++sUSQgHNmXSpGRxiDdyQ+BExJql6XRFZwP6rmxc/jUPRcvjnkOkC+9o3N/+mFv3A
+83LsAtMgvg8Y8MFi/StiP6EuISSCmeZLfYmO2rFQR2CM8X4FybdaIQ3z3MltTHKD
+PWqvOMhiAnao1gGv3HbSrnKl
+-----END CERTIFICATE-----
