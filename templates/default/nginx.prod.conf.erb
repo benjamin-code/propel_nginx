@@ -1,3 +1,5 @@
+client_max_body_size 500M;
+
 upstream catalog_backends {
     ip_hash;
     server <%= @upstream_1 %>:9510;
