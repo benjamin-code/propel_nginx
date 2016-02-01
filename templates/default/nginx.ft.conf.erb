@@ -55,7 +55,7 @@ server {
 server {
     listen 8449 ssl;
     location / {
-        proxy_pass http://oo_backends;
+        proxy_pass https://oo_backends;
         proxy_set_header Host $host:8449;
         proxy_set_header X-Real-IP $remote_addr:8449;
     }
