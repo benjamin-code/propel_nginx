@@ -21,10 +21,23 @@ end
 cookbook_file '/etc/nginx/ssl/propel_sandbox.crt' do
   source 'propel_sandbox.crt'
   mode '0755'
+  only_if { node.chef_environment == 'sandbox' }
 end
 cookbook_file '/etc/nginx/ssl/propel_sandbox.key' do
   source 'propel_sandbox.key'
   mode '0755'
+  only_if { node.chef_environment == 'sandbox' }
+end
+
+cookbook_file '/etc/nginx/ssl/propel_env1.crt' do
+  source 'pln-cd1-ewebportal.core.eslabs.ssn.hp.com.crt'
+  mode '0755'
+  only_if { node.chef_environment == 'env1' }
+end
+cookbook_file '/etc/nginx/ssl/propel_env1.key' do
+  source 'pln-cd1-ewebportal.core.eslabs.ssn.hp.com.key'
+  mode '0755'
+  only_if { node.chef_environment == 'env1' }
 end
 
 template "/etc/nginx/conf.d/propel.conf" do
