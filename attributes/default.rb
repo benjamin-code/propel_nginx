@@ -1,19 +1,25 @@
-if ( node.hostname =~ /cr(.*)/ )
-  puts "This is the Prod environment."
-default[:propel_nginx][:propel_backend_1] = "atc-cr-wls3"
-default[:propel_nginx][:propel_backend_2] = "atc-cr-wls4"
+if node.chef_environment == 'prod'
+default[:propel_nginx][:propel_backend_1] = "act-cr-wls3"
+default[:propel_nginx][:propel_backend_2] = "act-cr-wls4"
 default[:propel_nginx][:propel_backend_3] = "swa-cr-wls3"
 default[:propel_nginx][:propel_backend_4] = "swa-cr-wls4"
+default[:propel_nginx][:propel_nginx_vip] = ""
+default[:propel_nginx][:propel_cert_path] = "/etc/nginx/ssl/propel_prod.crt"
+default[:propel_nginx][:propel_key_path] = "/etc/nginx/ssl/propel_prod.key"
 end
 
 if node.chef_environment == 'sandbox'
-  puts "This is the N1 environment."
 default[:propel_nginx][:propel_backend_1] = "propel-ha-5"
 default[:propel_nginx][:propel_backend_2] = "propel-ha-6"
+default[:propel_nginx][:propel_nginx_vip] = "nginxvip.hp.com"
+default[:propel_nginx][:propel_cert_path] = "/etc/nginx/ssl/propel_sandbox.crt"
+default[:propel_nginx][:propel_key_path] = "/etc/nginx/ssl/propel_sandbox.key"
 end
 
 if node.chef_environment == 'env1'
-  puts "This is the FT1 environment."
 default[:propel_nginx][:propel_backend_1] = "pln-cd1-iweb3"
 default[:propel_nginx][:propel_backend_2] = "pln-cd1-iweb4"
+default[:propel_nginx][:propel_nginx_vip] = ""
+default[:propel_nginx][:propel_cert_path] = "/etc/nginx/ssl/propel_env1.crt"
+default[:propel_nginx][:propel_key_path] = "/etc/nginx/ssl/propel_env1.key"
 end

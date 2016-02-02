@@ -9,7 +9,7 @@ Requirements
 ------------
 TODO: List your cookbook requirements. Be sure to include any requirements this cookbook has on platforms, libraries, other cookbooks, packages, operating systems, etc.
 
-e.g.
+e.g. 
 #### packages
 - `toaster` - ecs_python needs toaster to brown your bagel.
 
