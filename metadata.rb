@@ -1,4 +1,4 @@
-name             'ecs_python'
+name             'propel_nginx'
 maintainer       'YOUR_COMPANY_NAME'
 maintainer_email 'YOUR_EMAIL'
 license          'All rights reserved'

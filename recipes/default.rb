@@ -8,12 +8,7 @@
 #
 #
 
-if node.chef_environment == 'sandbox'
-  service 'iptables' do
-      service_name 'iptables'
-    action  :stop
-  end
-end
+include_recipe "propel_nginx::iptables_nginx_app"
 
 service 'nginx' do
     service_name 'nginx'
