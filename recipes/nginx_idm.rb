@@ -33,12 +33,12 @@ cookbook_file '/etc/nginx/ssl/propel_env1.key' do
   only_if { node.chef_environment == 'env1' }
 end
 cookbook_file '/etc/nginx/ssl/propel_prod.crt' do
-  source 'atcswa-cr-propel.mcloud.svcs.hpe.com.crt'
+  source 'atcswa-cr-empp.mcloud.svcs.hpe.com.crt'
   mode '0755'
   only_if { node.chef_environment == 'prod' }
 end
 cookbook_file '/etc/nginx/ssl/propel_prod.key' do
-  source 'atcswa-cr-propel.mcloud.svcs.hpe.com.key' 
+  source 'atcswa-cr-empp.mcloud.svcs.hpe.com.key' 
   mode '0755'
   only_if { node.chef_environment == 'prod' }
 end
