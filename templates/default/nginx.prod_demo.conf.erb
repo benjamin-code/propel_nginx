@@ -1,3 +1,14 @@
+access_log              /var/log/nginx/propel.access.log;
+error_log               /var/log/nginx/propel.error.log; 
+client_max_body_size 500M;
+worker_processes 10;
+
+events {
+    worker_connections  11000;
+}
+
+worker_rlimit_nofile    20000;
+
 upstream mpp_backends {
     ip_hash;
     server <%= @upstream_1 %>:8089;
