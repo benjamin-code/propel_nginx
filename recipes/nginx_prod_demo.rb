@@ -17,6 +17,18 @@ package 'nginx'  do
   notifies :restart, "service[nginx]", :delayed
 end
 
+file '/etc/nginx/conf.d/default.conf' do
+  action :delete
+end
+
+template "/etc/nginx/nginx.conf" do
+  source "nginx.prod_demo.main.conf.erb"
+  mode '0644'
+  owner 'root'
+  group 'root'
+  notifies :restart, "service[nginx]", :delayed
+end
+
 service 'nginx' do
     service_name 'nginx'
   action [:enable, :start]
