@@ -92,6 +92,7 @@ template "/etc/nginx/conf.d/propel.conf" do
       :upstream_4 => node[:propel_nginx][:propel_backend_4],
       :crtfile => "/etc/nginx/ssl/propel_prod.crt",
       :keyfile => "/etc/nginx/ssl/propel_prod.key",
+      :server_name => node.hostname
     })
      only_if { node.chef_environment == 'prod' }
      notifies :restart, "service[nginx]", :immediately
