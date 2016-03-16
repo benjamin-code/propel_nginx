@@ -1,6 +1,6 @@
 access_log              /var/log/nginx/propel.access.log;
 error_log               /var/log/nginx/propel.error.log; 
-client_max_body_size 500M;
+# client_max_body_size 500M; this is already set in nginx.conf
 
 upstream catalog_backends {
     ip_hash;
