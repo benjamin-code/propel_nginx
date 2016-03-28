@@ -43,7 +43,7 @@ upstream diagnostics_backends {
 }
 
 upstream idm_backends {
-    least_conn;
+    ip_hash;
     server <%= @upstream_1 %>:9600;
     server <%= @upstream_2 %>:9600;
     server <%= @upstream_3 %>:9600;
