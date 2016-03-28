@@ -54,3 +54,9 @@ template "/etc/nginx/conf.d/propel.conf" do
     notifies :restart, "service[nginx]", :immediately
 end
 
+cookbook_file '/etc/logrotate.d/nginx' do
+  source 'logrotate' 
+  mode '0644'
+  notifies :restart, "service[nginx]", :immediately
+end
+
