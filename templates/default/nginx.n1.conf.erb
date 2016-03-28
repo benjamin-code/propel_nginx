@@ -3,49 +3,49 @@ error_log               /var/log/nginx/propel.error.log;
 client_max_body_size 500M;
 
 upstream catalog_backends {
-    ip_hash;
+    least_conn;
     server <%= @upstream_1 %>:9510;
     server <%= @upstream_2 %>:9510;
 }
 
 upstream oo_backends {
-    ip_hash;
+    least_conn;
     server <%= @upstream_1 %>:8449;
     server <%= @upstream_2 %>:8449;
 }
 
 upstream sx_backends{
-    ip_hash;
+    least_conn;
     server <%= @upstream_1 %>:9444;
     server <%= @upstream_2 %>:9444;
 }
 
 upstream subscription_backends {
-    ip_hash;
+    least_conn;
     server <%= @upstream_1 %>:9595;
     server <%= @upstream_2 %>:9595;
 }
 
 upstream diagnostics_backends {
-    ip_hash;
+    least_conn;
     server <%= @upstream_1 %>:9810;
     server <%= @upstream_2 %>:9810;
 }
 
 upstream idm_backends {
-    ip_hash;
+    least_conn;
     server <%= @upstream_1 %>:9600;
     server <%= @upstream_2 %>:9600;
 }
 
 upstream search_backends {
-    ip_hash;
+    least_conn;
     server <%= @upstream_1 %>:9040;
     server <%= @upstream_2 %>:9040;
 }
 
 upstream ganglia_backends {
-    ip_hash;
+    least_conn;
     server <%= @upstream_1 %>:9843;
     server <%= @upstream_2 %>:9843;
 }
