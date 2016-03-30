@@ -1,5 +1,11 @@
-access_log              /var/log/nginx/propel.access.log;
-error_log               /var/log/nginx/propel.error.log; 
+log_format  propel  '$remote_addr - $remote_user [$time_local] "$request" '
+                  '$status $body_bytes_sent "$http_referer" '
+                  '"$http_user_agent" "$http_x_forwarded_for" '
+                  '$upstream_addr $upstream_status $request_time $upstream_response_time';
+
+
+access_log              /var/log/nginx/propel.access.log    propel;
+error_log               /var/log/nginx/propel.error.log;
 
 upstream idm_backends {
     ip_hash;
