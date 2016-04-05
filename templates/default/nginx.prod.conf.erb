@@ -77,6 +77,7 @@ server {
     listen 9510 ssl; # 'ssl' parameter tells NGINX to decrypt the traffic
     location / {
         proxy_pass https://catalog_backends;
+        proxy_next_upstream http_403 http_404 http_500 http_502 http_503 error timeout invalid_header;        
         proxy_set_header Host $host:9510;
         proxy_set_header X-Real-IP $remote_addr:9510;
     }
@@ -93,6 +94,7 @@ server {
     listen 8449 ssl;
     location / {
         proxy_pass https://oo_backends;
+        proxy_next_upstream http_403 http_404 http_500 http_502 http_503 error timeout invalid_header;        
         proxy_set_header Host $host:8449;
         proxy_set_header X-Real-IP $remote_addr:8449;
     }
@@ -109,6 +111,7 @@ server {
     listen 9444 ssl; # 'ssl' parameter tells NGINX to decrypt the traffic
     location / {
         proxy_pass https://sx_backends;
+        proxy_next_upstream http_403 http_404 http_500 http_502 http_503 error timeout invalid_header;        
         proxy_set_header Host $host:9444;
         proxy_set_header X-Real-IP $remote_addr:9444;
     }
@@ -125,6 +128,7 @@ server {
     listen 9595 ssl; # 'ssl' parameter tells NGINX to decrypt the traffic
     location / {
         proxy_pass https://subscription_backends;
+        proxy_next_upstream http_403 http_404 http_500 http_502 http_503 error timeout invalid_header;        
         proxy_set_header Host $host:9595;
         proxy_set_header X-Real-IP $remote_addr:9595;
     }
@@ -141,6 +145,7 @@ server {
     listen 9600 ssl; # 'ssl' parameter tells NGINX to decrypt the traffic
     location / {
         proxy_pass https://idm_backends;
+        proxy_next_upstream http_403 http_404 http_500 http_502 http_503 error timeout invalid_header;        
         proxy_set_header Host $host:9600;
         proxy_set_header X-Real-IP $remote_addr:9600;
     }
@@ -157,6 +162,7 @@ server {
     listen 9810 ssl; # 'ssl' parameter tells NGINX to decrypt the traffic
     location / {
         proxy_pass https://diagnostics_backends;
+        proxy_next_upstream http_403 http_404 http_500 http_502 http_503 error timeout invalid_header;        
         proxy_set_header Host $host:9810;
         proxy_set_header X-Real-IP $remote_addr:9810;
     }
@@ -173,6 +179,7 @@ server {
     listen 9040 ssl; # 'ssl' parameter tells NGINX to decrypt the traffic
     location / {
         proxy_pass https://search_backends;
+        proxy_next_upstream http_403 http_404 http_500 http_502 http_503 error timeout invalid_header;        
         proxy_set_header Host $host:9040;
         proxy_set_header X-Real-IP $remote_addr:9040;
     }
@@ -189,6 +196,7 @@ server {
     listen 9843 ssl; # 'ssl' parameter tells NGINX to decrypt the traffic
     location / {
         proxy_pass https://ganglia_backends;
+        proxy_next_upstream http_403 http_404 http_500 http_502 http_503 error timeout invalid_header;
         proxy_set_header Host $host:9843;
         proxy_set_header X-Real-IP $remote_addr:9843;
     }
