@@ -51,7 +51,6 @@ template "/etc/nginx/conf.d/propel.conf" do
       :key_path => node[:propel_nginx][:propel_key_path],
       :server_name => node.hostname
     })
-    not_if { node.hostname =~ /swa-cr(.*)/  }
     notifies :restart, "service[nginx]", :immediately
 end
 
