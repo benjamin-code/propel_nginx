@@ -65,6 +65,9 @@ server {
         proxy_set_header Host $host:8089;
         proxy_set_header X-Real-IP $remote_addr:8089;
     }
+    underscores_in_headers on;
+    client_header_buffer_size 8k;
+    large_client_header_buffers 4 32k;    
     server_name <%= @server_name %>;
     ssl on;
     ssl_certificate <%= @crtfile %>;
@@ -81,6 +84,9 @@ server {
         proxy_set_header Host $host:9000;
         proxy_set_header X-Real-IP $remote_addr:9000;
     }
+    underscores_in_headers on;
+    client_header_buffer_size 8k;
+    large_client_header_buffers 4 32k;    
     server_name <%= @server_name %>;
     ssl on;
     ssl_certificate <%= @crtfile %>;
@@ -97,6 +103,9 @@ server {
         proxy_set_header Host $host:9010;
         proxy_set_header X-Real-IP $remote_addr:9010;
     }
+    underscores_in_headers on;
+    client_header_buffer_size 8k;
+    large_client_header_buffers 4 32k;    
     server_name <%= @server_name %>;
     ssl on;
     ssl_certificate <%= @crtfile %>;
@@ -113,6 +122,9 @@ server {
         proxy_set_header Host $host:9100;
         proxy_set_header X-Real-IP $remote_addr:9100;
     }
+    underscores_in_headers on;
+    client_header_buffer_size 8k;
+    large_client_header_buffers 4 32k;    
     server_name <%= @server_name %>;
     ssl on;
     ssl_certificate <%= @crtfile %>;
@@ -129,6 +141,9 @@ server {
         proxy_set_header Host $host:9200;
         proxy_set_header X-Real-IP $remote_addr:9200;
     }
+    underscores_in_headers on;
+    client_header_buffer_size 8k;
+    large_client_header_buffers 4 32k;    
     server_name <%= @server_name %>;
     ssl on;
     ssl_certificate <%= @crtfile %>;
@@ -145,6 +160,9 @@ server {
         proxy_set_header Host $host:9300;
         proxy_set_header X-Real-IP $remote_addr:9300;
     }
+    underscores_in_headers on;
+    client_header_buffer_size 8k;
+    large_client_header_buffers 4 32k;    
     server_name <%= @server_name %>;
     ssl on;
     ssl_certificate <%= @crtfile %>;
@@ -161,6 +179,9 @@ server {
         proxy_set_header Host $host:9400;
         proxy_set_header X-Real-IP $remote_addr:9400;
     }
+    underscores_in_headers on;
+    client_header_buffer_size 8k;
+    large_client_header_buffers 4 32k;    
     server_name <%= @server_name %>;
     ssl on;
     ssl_certificate <%= @crtfile %>;
@@ -177,6 +198,9 @@ server {
         proxy_set_header Host $host:9410;
         proxy_set_header X-Real-IP $remote_addr:9410;
     }
+    underscores_in_headers on;
+    client_header_buffer_size 8k;
+    large_client_header_buffers 4 32k;    
     server_name <%= @server_name %>;
     ssl on;
     ssl_certificate <%= @crtfile %>;
@@ -193,6 +217,9 @@ server {
         proxy_set_header Host $host:9500;
         proxy_set_header X-Real-IP $remote_addr:9500;
     }
+    underscores_in_headers on;
+    client_header_buffer_size 8k;
+    large_client_header_buffers 4 32k;    
     server_name <%= @server_name %>;
     ssl on;
     ssl_certificate <%= @crtfile %>;
@@ -209,6 +236,9 @@ server {
         proxy_set_header Host $host:9700;
         proxy_set_header X-Real-IP $remote_addr:9700;
     }
+    underscores_in_headers on;
+    client_header_buffer_size 8k;
+    large_client_header_buffers 4 32k;    
     server_name <%= @server_name %>;
     ssl on;
     ssl_certificate <%= @crtfile %>;
@@ -225,6 +255,9 @@ server {
         proxy_set_header Host $host:9800;
         proxy_set_header X-Real-IP $remote_addr:9800;
     }
+    underscores_in_headers on;
+    client_header_buffer_size 8k;
+    large_client_header_buffers 4 32k;    
     server_name <%= @server_name %>;
     ssl on;
     ssl_certificate <%= @crtfile %>;
@@ -241,6 +274,9 @@ server {
         proxy_set_header Host $host:9600;
         proxy_set_header X-Real-IP $remote_addr:9600;
     }
+    underscores_in_headers on;
+    client_header_buffer_size 8k;
+    large_client_header_buffers 4 32k;    
     server_name <%= @server_name %>;
     ssl on;
     ssl_certificate <%= @crtfile %>;
