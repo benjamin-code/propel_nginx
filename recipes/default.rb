@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: propel_nginx
+# Cookbook Name:: service_manager
 # Recipe:: default
 #
 # Copyright 2014, YOUR_COMPANY_NAME
@@ -8,98 +8,64 @@
 #
 #
 
-include_recipe "propel_nginx::iptables_nginx_app"
-
-service 'nginx' do
-    service_name 'nginx'
-  action [:enable, :start]
+directory /tmp/sm940_media do
+   owner username
+   group groupname
+   mode "0755"
+   action :create
 end
 
-dirlist=["/etc/nginx","/etc/nginx/ssl","/etc/nginx/conf.d" ]
-  dirlist.each do |dir| 
-        directory dir do
-        mode "0755"
-        action :create
-  end
-end   
-
-cookbook_file '/etc/nginx/ssl/propel_sandbox.crt' do
-  source 'propel_sandbox.crt'
+cookbook_file '/tmp/sm940_media/propel_sandbox.crt' do
+  source 'installer.properties'
   mode '0755'
-  only_if { node.chef_environment == 'sandbox' }
 end
-cookbook_file '/etc/nginx/ssl/propel_sandbox.key' do
-  source 'propel_sandbox.key'
+
+cookbook_file '/tmp/sm940_media/oracle-instantclient11.2-basic-11.2.0.4.0-1.i386.rpm' do
+  source 'oracle-instantclient11.2-basic-11.2.0.4.0-1.i386.rpm'
   mode '0755'
-  only_if { node.chef_environment == 'sandbox' }
+  notifies :run, "bash[Install-oracle-instantclient11.2-basic-11.2.0.4.0-1.i386.rpm]", :immediately
 end
 
-cookbook_file '/etc/nginx/ssl/propel_env1.crt' do
-  source 'pln-cd1-ewebportal.core.eslabs.ssn.hp.com.crt'
+bash "Install-oracle-instantclient11.2-basic-11.2.0.4.0-1.i386.rpm" do
+  code <<-EOH
+         rpm -Uvh /tmp/sm940_media/oracle-instantclient11.2-basic-11.2.0.4.0-1.i386.rpm
+    EOH
+end
+
+cookbook_file '/tmp/sm940_media/oracle-instantclient11.2-sqlplus-11.2.0.4.0-1.i386.rpm' do
+  source 'oracle-instantclient11.2-sqlplus-11.2.0.4.0-1.i386.rpm'
   mode '0755'
-  only_if { node.chef_environment == 'env1' }
+  notifies :run, "bash[Install-oracle-instantclient11.2-sqlplus-11.2.0.4.0-1.i386.rpm]", :immediately
 end
-cookbook_file '/etc/nginx/ssl/propel_env1.key' do
-  source 'pln-cd1-ewebportal.core.eslabs.ssn.hp.com.key'
+
+bash "Install-oracle-instantclient11.2-sqlplus-11.2.0.4.0-1.i386.rpm" do
+  code <<-EOH
+         rpm -Uvh /tmp/sm940_media/oracle-instantclient11.2-sqlplus-11.2.0.4.0-1.i386.rpm
+    EOH
+end
+
+cookbook_file '/tmp/sm940_media/setupLinuxX64-sm940.bin' do
+  source 'setupLinuxX64-sm940.bin'
   mode '0755'
-  only_if { node.chef_environment == 'env1' }
+  notifies :run, "bash[Install-sm]", :immediately
 end
 
-cookbook_file '/etc/nginx/ssl/propel_prod.crt' do
-  source 'atcswa-cr-empp.mcloud.svcs.hpe.com.crt'
+bash "Install-sm" do
+  cwd /tmp/sm940_media
+  code <<-EOH
+         sh /tmp/sm940_media/setupLinuxX64-sm940.bin -i silent
+    EOH
+end
+
+cookbook_file '/opt/HP/ServiceManager9.40/Server/RUN/sm.ini' do
+  source 'sm.ini'
   mode '0755'
-  only_if { node.chef_environment == 'prod' }
-end
-cookbook_file '/etc/nginx/ssl/propel_prod.key' do
-  source 'atcswa-cr-empp.mcloud.svcs.hpe.com.key' 
-  mode '0755'
-  only_if { node.chef_environment == 'prod' }
+  only_if { ::File.exist?("/opt/HP/ServiceManager9.40/Server/RUN/smstart") }
+  notifies :run, "bash[start server manager]", :immediately
 end
 
-template "/etc/nginx/conf.d/propel.conf" do
-    source "nginx.n1.conf.erb"
-    variables ({
-      :upstream_1 => node[:propel_nginx][:propel_backend_1],
-      :upstream_2 => node[:propel_nginx][:propel_backend_2],
-      :crtfile => "/etc/nginx/ssl/propel_sandbox.crt",
-      :keyfile => "/etc/nginx/ssl/propel_sandbox.key",
-      :server_name => node.hostname
-    })
-     only_if { node.chef_environment == 'sandbox' }
-     notifies :restart, "service[nginx]", :immediately
-end
-
-
-template "/etc/nginx/conf.d/propel.conf" do
-    source "nginx.ft.conf.erb"
-    variables ({
-      :upstream_1 => node[:propel_nginx][:propel_backend_1],
-      :upstream_2 => node[:propel_nginx][:propel_backend_2],
-      :crtfile => "/etc/nginx/ssl/propel_env1.crt",
-      :keyfile => "/etc/nginx/ssl/propel_env1.key",
-      :server_name => node.hostname
-    })
-        only_if { node.chef_environment == 'env1' }
-        notifies :restart, "service[nginx]", :immediately
-end
-
-template "/etc/nginx/conf.d/propel.conf" do
-    source "nginx.prod.conf.erb"
-    variables ({
-      :upstream_1 => node[:propel_nginx][:propel_backend_1],
-      :upstream_2 => node[:propel_nginx][:propel_backend_2],
-      :upstream_3 => node[:propel_nginx][:propel_backend_3],
-      :upstream_4 => node[:propel_nginx][:propel_backend_4],
-      :crtfile => "/etc/nginx/ssl/propel_prod.crt",
-      :keyfile => "/etc/nginx/ssl/propel_prod.key",
-      :server_name => node.hostname
-    })
-     only_if { node.chef_environment == 'prod' }
-     notifies :restart, "service[nginx]", :immediately
-end
-
-cookbook_file '/etc/logrotate.d/nginx' do
-  source 'logrotate' 
-  mode '0644'
-  notifies :restart, "service[nginx]", :immediately
+bash "start server manager" do
+  code <<-EOH
+         /opt/HP/ServiceManager9.40/Server/RUN/smstart
+    EOH
 end

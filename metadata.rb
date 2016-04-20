@@ -1,7 +1,7 @@
-name             'propel_nginx'
+name             'service_manager'
 maintainer       'YOUR_COMPANY_NAME'
 maintainer_email 'YOUR_EMAIL'
 license          'All rights reserved'
-description      'Installs/Nginx'
+description      'Installs/service_manager'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          '1.1.3'
+version          '1.0.0'
