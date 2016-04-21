@@ -15,9 +15,30 @@ directory /tmp/sm940_media do
    action :create
 end
 
-cookbook_file '/tmp/sm940_media/propel_sandbox.crt' do
+cookbook_file '/tmp/sm940_media/installer.properties' do
   source 'installer.properties'
   mode '0755'
+end
+
+cookbook_file '/tmp/sm940_media/glibc-rpm.tar.gz' do
+  source 'glibc-rpm.tar.gz'
+  mode '0755'
+  notifies :run, "bash[Unzip glibc-rpm.tar.gz]", :immediately
+  notifies :run, "bash[Install glibc-rpm]", :immediately
+end
+
+bash "Unzip glibc-rpm.tar.gz" do
+    cwd /tmp/sm940_media
+  code <<-EOH
+         tar xzf /tmp/sm940_media/glibc-rpm.tar.gz
+    EOH
+end
+
+bash "Install glibc-rpm" do
+  code <<-EOH
+         rpm -ivh /tmp/sm940_media/glibc-rpm/xxx.rpm
+         rpm -ivh /tmp/sm940_media/glibc-rpm/xxx.rpm
+    EOH
 end
 
 cookbook_file '/tmp/sm940_media/oracle-instantclient11.2-basic-11.2.0.4.0-1.i386.rpm' do
@@ -69,3 +90,4 @@ bash "start server manager" do
          /opt/HP/ServiceManager9.40/Server/RUN/smstart
     EOH
 end
+
