@@ -1,23 +1,26 @@
-if node.chef_environment == 'prod'
-default[:propel_nginx][:propel_backend_1] = "atc-cr-wls3"
-default[:propel_nginx][:propel_backend_2] = "atc-cr-wls4"
-default[:propel_nginx][:propel_backend_3] = "swa-cr-wls3"
-default[:propel_nginx][:propel_backend_4] = "swa-cr-wls4"
-default[:propel_nginx][:propel_nginx_vip] = "atcswa-cr-atlassian.ecs-core.ssn.hp.com"
-end
-
 if node.chef_environment == 'sandbox'
-default[:propel_nginx][:propel_backend_1] = "atc-cr-wls3"
-default[:propel_nginx][:propel_backend_2] = "atc-cr-wls4"
-default[:propel_nginx][:propel_backend_3] = "swa-cr-wls3"
-default[:propel_nginx][:propel_backend_4] = "swa-cr-wls4"
-default[:propel_nginx][:propel_nginx_vip] = "nginxvip.hp.com"
+default[:service_manager][:backend_1] = ""
+default[:service_manager][:backend_2] = ""
+default[:service_manager][:backend_3] = ""
+default[:service_manager][:backend_4] = ""
+default[:service_manager][:sqldb] = "30.160.245.226:1521/orcl"
+default[:service_manager][:sm_media_url] = "30.160.245.224"
 end
 
 if node.chef_environment == 'env1'
-default[:propel_nginx][:propel_backend_1] = "atc-cr-wls3"
-default[:propel_nginx][:propel_backend_2] = "atc-cr-wls4"
-default[:propel_nginx][:propel_backend_3] = "swa-cr-wls3"
-default[:propel_nginx][:propel_backend_4] = "swa-cr-wls4"
-default[:propel_nginx][:propel_nginx_vip] = "pln-cd1-apigw-vip.core.eslabs.ssn.hp.com"
+default[:service_manager][:backend_1] = ""
+default[:service_manager][:backend_2] = ""
+default[:service_manager][:backend_3] = ""
+default[:service_manager][:backend_4] = ""
+default[:service_manager][:sqldb] = ""
+default[:service_manager][:sm_media_url] = ""
+end
+
+if node.chef_environment == 'prod'
+default[:service_manager][:backend_1] = ""
+default[:service_manager][:backend_2] = ""
+default[:service_manager][:backend_3] = ""
+default[:service_manager][:backend_4] = ""
+default[:service_manager][:sqldb] = ""
+default[:service_manager][:sm_media_url] = ""
 end
