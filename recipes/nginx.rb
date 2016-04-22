@@ -13,7 +13,7 @@ service 'nginx' do
   action [:enable, :start]
 end
 
-dirlist=["/etc/nginx","/etc/nginx/conf.d" ]
+dirlist=["/etc/nginx","/etc/nginx/ssl","/etc/nginx/conf.d" ]
   dirlist.each do |dir| 
         directory dir do
         mode "0755"
@@ -24,10 +24,10 @@ end
 template "/etc/nginx/conf.d/sm.conf" do
     source "nginx.sm.conf.erb"
     variables ({
-      :upstream_1 => node[:propel_nginx][:backend_1],
-      :upstream_2 => node[:propel_nginx][:backend_2],
-      :upstream_1 => node[:propel_nginx][:backend_3],
-      :upstream_2 => node[:propel_nginx][:backend_4],
+      :upstream_1 => node[:propel_nginx][:propel_backend_1],
+      :upstream_2 => node[:propel_nginx][:propel_backend_2],
+      :upstream_1 => node[:propel_nginx][:propel_backend_3],
+      :upstream_2 => node[:propel_nginx][:propel_backend_4],
     })
     notifies :restart, "service[nginx]", :immediately
 end
