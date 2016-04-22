@@ -9,7 +9,6 @@
 #
 
 sm_media_url  = node[:service_manager][:sm_media_url]
-password  = node[:service_manager][:password]
 
 # create user
 user smadmin do
@@ -17,13 +16,13 @@ user smadmin do
   system   true
   uid      '4050'
   gid      '4050'
-  shell    '/sbin/nologin'
+  shell    '/bin/bash'
   home     '/home/smadmin'
-  password password
+  password 'smadmin'
   supports :manage_home=>true
 end
 
-directory '/tmp/sm940_media' do
+directory /tmp/sm940_media do
    owner username
    group groupname
    mode "0755"
@@ -42,7 +41,7 @@ cookbook_file '/tmp/sm940_media/nss-softokn-freebl-3.12.9-11.el6.i686.rpm' do
 end
 
 bash "Install nss-softokn-freebl" do
-    cwd '/tmp/sm940_media'
+    cwd /tmp/sm940_media
   code <<-EOH
          rpm -ivh /tmp/sm940_media/glibc-rpm/nss-softokn-freebl-3.12.9-11.el6.i686.rpm
     EOH
@@ -55,7 +54,7 @@ cookbook_file '/tmp/sm940_media/glibc-2.12-1.107.el6_4.5.i686.rpm' do
 end
 
 bash "Install glibc" do
-    cwd '/tmp/sm940_media'
+    cwd /tmp/sm940_media
   code <<-EOH
          rpm -ivh /tmp/sm940_media/glibc-rpm/glibc-2.12-1.107.el6_4.5.i686.rpm
     EOH
@@ -95,14 +94,14 @@ remote_file "/tmp/sm940_media/setupLinuxX64-sm940.bin" do
 end
 
 bash "Install-sm" do
-  cwd '/tmp/sm940_media'
+  cwd /tmp/sm940_media
   code <<-EOH
          sh /tmp/sm940_media/setupLinuxX64-sm940.bin -i silent
     EOH
 end
 
 template "/opt/HP/ServiceManager9.40/Server/RUN/sm.ini" do
-    source "sm.ini.erb"
+    source "sm.ini"
     mode '0755'
     variables ({
       :sqldb => node[:service_manager][:sqldb]
