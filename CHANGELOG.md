@@ -1,11 +1,11 @@
-service_manager CHANGELOG
+ecs_python CHANGELOG
 ====================
 
-This file is used to list changes made in each version of the service_manager cookbook.
+This file is used to list changes made in each version of the ecs_python cookbook.
 
 0.1.0
 -----
-- [your_name] - Initial release of service_manager
+- [your_name] - Initial release of ecs_python
 
 - - -
 Check the [Markdown Syntax Guide](http://daringfireball.net/projects/markdown/syntax) for help with Markdown.
