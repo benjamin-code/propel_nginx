@@ -1,8 +1,9 @@
 if node.chef_environment == 'sandbox'
-default[:service_manager][:backend_1] = "30.160.245.224"
+default[:service_manager][:backend_1] = "30.160.245.220"
 default[:service_manager][:backend_2] = "30.160.245.224"
-default[:service_manager][:sqldb] = "30.160.245.226:1521/orcl"
-default[:service_manager][:sm_media_url] = "30.160.245.224"
+default[:service_manager][:sqldb_url] = "30.160.245.226:1521/orcl"
+default[:service_manager][:sm_media_url] = "30.160.245.213"
+default[:service_manager][:keystore_path]] = "/root/.keystore"
 end
 
 if node.chef_environment == 'env1'
