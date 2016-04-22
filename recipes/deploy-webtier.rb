@@ -7,17 +7,13 @@
 # All rights reserved - Do Not Redistribute
 #
 #
-keystore_path  = node[:service_manager][:keystore_path]
-
-cookbook_file keystore_path do
-  source '.keystore'
-  mode '0755'
-end
 
 cookbook_file '/opt/HP/ServiceManager9.40/Server/apache-tomcat-8.0.33.tar.gz' do
   source 'apache-tomcat-8.0.33.tar.gz'
   mode '0755'
   notifies :run, "bash[Unzip apache-tomcat-8.0.33.tar.gz]", :immediately
+  notifies :run, "bash[restart server manager]", :immediately
+  notifies :run, "bash[start tomcat]", :immediately
 end
 
 bash "Unzip apache-tomcat-8.0.33.tar.gz" do
@@ -27,13 +23,12 @@ bash "Unzip apache-tomcat-8.0.33.tar.gz" do
     EOH
 end
 
-template '/opt/HP/ServiceManager9.40/Server/apache-tomcat-8.0.33/conf/server.xml' do
-  source 'server.xml'
-  mode '0755'
-  variables ({
-      :keystore_path => keystore_path
-    })
-  notifies :run, "bash[start tomcat]", :immediately
+bash "restart server manager" do
+  user 'smadmin'
+  code <<-EOH
+         /opt/HP/ServiceManager9.40/Server/RUN/smstop
+         /opt/HP/ServiceManager9.40/Server/RUN/smstart
+    EOH
 end
 
 bash "start tomcat" do

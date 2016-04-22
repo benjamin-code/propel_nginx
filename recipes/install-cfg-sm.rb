@@ -105,7 +105,7 @@ template "/opt/HP/ServiceManager9.40/Server/RUN/sm.ini" do
     source "sm.ini.erb"
     mode '0755'
     variables ({
-      :sqldb_url => node[:service_manager][:sqldb_url]
+      :sqldb => node[:service_manager][:sqldb]
     })
     only_if { ::File.exist?("/opt/HP/ServiceManager9.40/Server/RUN/smstart") }
     notifies :run, "bash[start server manager]", :immediately
@@ -114,8 +114,7 @@ end
 bash "start server manager" do
   user 'smadmin'
   code <<-EOH
-        chown -R smadmin:smadmin /opt/HP/ServiceManager9.40
-        /opt/HP/ServiceManager9.40/Server/RUN/smstart
+         /opt/HP/ServiceManager9.40/Server/RUN/smstart
     EOH
 end
 
