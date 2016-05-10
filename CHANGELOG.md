@@ -3,6 +3,10 @@ ecs_python CHANGELOG
 
 This file is used to list changes made in each version of the ecs_python cookbook.
 
+1.1.4
+-----
+- [morris] - add conf for vpcservice, internal web vip to internal web proxy (this conf file) to app server (backend).
+
 0.1.0
 -----
 - [your_name] - Initial release of ecs_python
