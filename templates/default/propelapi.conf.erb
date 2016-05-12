@@ -11,7 +11,7 @@ server {
 
     # MCP-112 - Customer Provided Images - api
     location <%= @image_service_path %> {
-        proxy_pass http://cpi_backends;
+        proxy_pass https://cpi_backends;
         # proxy_next_upstream http_403 http_404 http_500 http_502 http_503 error timeout invalid_header;
         proxy_set_header Host $host:$server_port;
         proxy_set_header X-Scheme $scheme;
