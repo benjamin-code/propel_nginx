@@ -98,11 +98,24 @@ server {
 
 server {
     listen 9010 ssl;
+
+    # MCP-112 - Customer Provided Images - api
+    location /image {
+        proxy_pass https://portal_backends;
+        proxy_set_header Host $host:9010;
+        proxy_set_header X-Scheme $scheme;
+        proxy_set_header X-Real-IP $remote_addr;
+        # disable buffering and max size - PUT will have large body for the image upload
+        proxy_request_buffering off;
+        client_max_body_size 0;     
+    }
+
     location / {
         proxy_pass https://portal_backends;
         proxy_set_header Host $host:9010;
         proxy_set_header X-Real-IP $remote_addr:9010;
     }
+
     underscores_in_headers on;
     client_header_buffer_size 8k;
     large_client_header_buffers 4 32k;    
