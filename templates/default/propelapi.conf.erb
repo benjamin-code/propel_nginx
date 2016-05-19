@@ -1,5 +1,3 @@
-access_log              /var/log/nginx/propelapi.access.log;
-error_log               /var/log/nginx/propelapi.error.log;
 
 upstream cpi_backends {
     ip_hash;
@@ -8,6 +6,8 @@ upstream cpi_backends {
 
 server {
     listen <%= @propelapi_port %> ssl;
+    access_log              /var/log/nginx/propelapi.access.log;
+    error_log               /var/log/nginx/propelapi.error.log;
 
     # MCP-112 - Customer Provided Images - api
     location <%= @image_service_path %> {
