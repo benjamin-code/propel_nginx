@@ -46,7 +46,7 @@ end
 template "/etc/nginx/conf.d/propel.conf" do
     source "weblayer_nginx.sandbox.conf.erb"
     variables ({
-      :upstream_1 => node[:propel_nginx][:propel_applayer_vip],
+      :upstream_1 => node[:propel_nginx][:propel_iweblayer_vip],
       :eweb_server_1 => node[:propel_nginx][:propel_ewebserver_1],
       :eweb_server_2 => node[:propel_nginx][:propel_ewebserver_2],
       :cert_path => node[:propel_nginx][:propel_cert_path],
@@ -60,7 +60,7 @@ end
 template "/etc/nginx/conf.d/propel.conf" do
     source "weblayer_nginx.ft.conf.erb"
     variables ({
-      :upstream_1 => node[:propel_nginx][:propel_applayer_vip],
+      :upstream_1 => node[:propel_nginx][:propel_iweblayer_vip],
       :eweb_server_1 => node[:propel_nginx][:propel_ewebserver_1],
       :eweb_server_2 => node[:propel_nginx][:propel_ewebserver_2],
       :cert_path => node[:propel_nginx][:propel_cert_path],
@@ -74,7 +74,7 @@ end
 template "/etc/nginx/conf.d/propel.conf" do
     source "weblayer_nginx.pro.conf.erb"
     variables ({
-      :upstream_1 => node[:propel_nginx][:propel_applayer_vip],
+      :upstream_1 => node[:propel_nginx][:propel_iweblayer_vip],
       :eweb_server_1 => node[:propel_nginx][:propel_ewebserver_1],
       :eweb_server_2 => node[:propel_nginx][:propel_ewebserver_2],
       :eweb_server_3 => node[:propel_nginx][:propel_ewebserver_3],
