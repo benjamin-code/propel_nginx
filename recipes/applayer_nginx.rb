@@ -7,9 +7,6 @@
 # All rights reserved - Do Not Redistribute
 #
 #
-
-include_recipe "propel_nginx::iptables_nginx_app"
-
 service 'nginx' do
     service_name 'nginx'
   action [:enable, :start]
