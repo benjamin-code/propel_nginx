@@ -9,7 +9,7 @@ dirlist=["/etc/nginx","/etc/nginx/ssl","/etc/nginx/conf.d" ]
         mode "0755"
         action :create
   end
-end   
+end
 
 cookbook_file '/etc/nginx/ssl/propel_sandbox.crt' do
   source 'propel_sandbox.crt'
@@ -44,13 +44,46 @@ cookbook_file '/etc/nginx/ssl/propel_prod.key' do
 end
 
 template "/etc/nginx/conf.d/propel.conf" do
-    source "nginx-idm.conf.erb"
+    source "weblayer_nginx.sandbox.conf.erb"
     variables ({
-      :upstream_1 => node[:propel_nginx][:propel_nginx_vip],
+      :upstream_1 => node[:propel_nginx][:propel_applayer_vip],
+      :eweb_server_1 => node[:propel_nginx][:propel_ewebserver_1],
+      :eweb_server_2 => node[:propel_nginx][:propel_ewebserver_2],
       :cert_path => node[:propel_nginx][:propel_cert_path],
       :key_path => node[:propel_nginx][:propel_key_path],
       :server_name => node.hostname
     })
+    only_if { node.chef_environment == 'sandbox' }
+    notifies :restart, "service[nginx]", :immediately
+end
+
+template "/etc/nginx/conf.d/propel.conf" do
+    source "weblayer_nginx.ft.conf.erb"
+    variables ({
+      :upstream_1 => node[:propel_nginx][:propel_applayer_vip],
+      :eweb_server_1 => node[:propel_nginx][:propel_ewebserver_1],
+      :eweb_server_2 => node[:propel_nginx][:propel_ewebserver_2],
+      :cert_path => node[:propel_nginx][:propel_cert_path],
+      :key_path => node[:propel_nginx][:propel_key_path],
+      :server_name => node.hostname
+    })
+    only_if { node.chef_environment == 'env1' }
+    notifies :restart, "service[nginx]", :immediately
+end
+
+template "/etc/nginx/conf.d/propel.conf" do
+    source "weblayer_nginx.pro.conf.erb"
+    variables ({
+      :upstream_1 => node[:propel_nginx][:propel_applayer_vip],
+      :eweb_server_1 => node[:propel_nginx][:propel_ewebserver_1],
+      :eweb_server_2 => node[:propel_nginx][:propel_ewebserver_2],
+      :eweb_server_3 => node[:propel_nginx][:propel_ewebserver_3],
+      :eweb_server_4 => node[:propel_nginx][:propel_ewebserver_4],
+      :cert_path => node[:propel_nginx][:propel_cert_path],
+      :key_path => node[:propel_nginx][:propel_key_path],
+      :server_name => node.hostname
+    })
+    only_if { node.chef_environment == 'prod' }
     notifies :restart, "service[nginx]", :immediately
 end
 

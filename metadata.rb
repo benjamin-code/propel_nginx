@@ -1,7 +1,7 @@
 name             'propel_nginx'
-maintainer       'YOUR_COMPANY_NAME'
-maintainer_email 'YOUR_EMAIL'
+maintainer       'HPE Cloud Service R&D'
+maintainer_email 'ecs.scrum.team.joel@hpe.com'
 license          'All rights reserved'
 description      'Installs/Nginx'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          '1.1.4'
+version          '1.2.0'
