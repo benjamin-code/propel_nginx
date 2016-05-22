@@ -9,7 +9,7 @@ error_log               /var/log/nginx/propel.error.log;
 
 upstream idm_backends {
     ip_hash;
-    server <%= @upstream_1 %>:9600;
+    server <%= @upstream_1 %>;
 }
 
 upstream eweblayer_servers {
