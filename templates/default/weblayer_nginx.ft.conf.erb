@@ -9,106 +9,17 @@ error_log               /var/log/nginx/propel.error.log;
 
 upstream idm_backends {
     ip_hash;
-    server <%= @upstream_1 %>;
+    server <%= @upstream_1 %>:9600;
 }
 
-upstream eweblayer_servers {
-    ip_hash;
-    server <%= @eweb_server_1 %>;
-    server <%= @eweb_server_2 %>;
-}
 
 server {
-    listen 443 ssl; # 'ssl' parameter tells NGINX to decrypt the traffic
+    listen 9600 ssl; # 'ssl' parameter tells NGINX to decrypt the traffic
     location / {
-        proxy_pass https://eweblayer_servers:9000;
-        proxy_next_upstream http_403 http_404 http_500 http_502 http_503 error timeout invalid_header;        
-        proxy_set_header Host $host:9000;
-        proxy_set_header X-Real-IP $remote_addr:9000;
-    }
-
-    location /launchpad {
-        proxy_pass https://eweblayer_servers:9000;
-        proxy_next_upstream http_403 http_404 http_500 http_502 http_503 error timeout invalid_header;        
-        proxy_set_header Host $host:9000 ;
-        proxy_set_header X-Real-IP $remote_addr:9000;
-    }
-
-    location /idm-service {
-        proxy_pass https://idm_backends:9600;
+        proxy_pass https://idm_backends;
         proxy_next_upstream http_403 http_404 http_500 http_502 http_503 error timeout invalid_header;        
         proxy_set_header Host $host:9600;
         proxy_set_header X-Real-IP $remote_addr:9600;
-    }
-
-    location /sx-client-ui {
-        proxy_pass https://eweblayer_servers:9410;
-        proxy_next_upstream http_403 http_404 http_500 http_502 http_503 error timeout invalid_header;        
-        proxy_set_header Host $host:9410;
-        proxy_set_header X-Real-IP $remote_addr:9410;
-    }
-
-    location /sx-ui {
-        proxy_pass https://eweblayer_servers:9400;
-        proxy_next_upstream http_403 http_404 http_500 http_502 http_503 error timeout invalid_header;        
-        proxy_set_header Host $host:9400;
-        proxy_set_header X-Real-IP $remote_addr:9400;
-    }
-
-    location /catalog-ui {
-        proxy_pass https://eweblayer_servers:9500;
-        proxy_next_upstream http_403 http_404 http_500 http_502 http_503 error timeout invalid_header;        
-        proxy_set_header Host $host:9500;
-        proxy_set_header X-Real-IP $remote_addr:9500;
-    }
-
-    location /portal {
-        proxy_pass https://eweblayer_servers:9010;
-        proxy_next_upstream http_403 http_404 http_500 http_502 http_503 error timeout invalid_header;        
-        proxy_set_header Host $host:9010;
-        proxy_set_header X-Real-IP $remote_addr:9010;
-    }
-
-    location /subscription {
-        proxy_pass https://eweblayer_servers:9700;
-        proxy_next_upstream http_403 http_404 http_500 http_502 http_503 error timeout invalid_header;        
-        proxy_set_header Host $host:9700;
-        proxy_set_header X-Real-IP $remote_addr:9700;
-    }
-
-    location /idm-admin {
-        proxy_pass https://eweblayer_servers:9200;
-        proxy_next_upstream http_403 http_404 http_500 http_502 http_503 error timeout invalid_header;        
-        proxy_set_header Host $host:9200;
-        proxy_set_header X-Real-IP $remote_addr:9200;
-    }
-
-    location /diagnostics {
-        proxy_pass https://eweblayer_servers:9800;
-        proxy_next_upstream http_403 http_404 http_500 http_502 http_503 error timeout invalid_header;        
-        proxy_set_header Host $host:9800;
-        proxy_set_header X-Real-IP $remote_addr:9800;
-    }
-
-    location /autopass-ui {
-        proxy_pass https://eweblayer_servers:9300;
-        proxy_next_upstream http_403 http_404 http_500 http_502 http_503 error timeout invalid_header;        
-        proxy_set_header Host $host:9300;
-        proxy_set_header X-Real-IP $remote_addr:9300;
-    }
-
-    location /api-doc {
-        proxy_pass https://eweblayer_servers:9540;
-        proxy_next_upstream http_403 http_404 http_500 http_502 http_503 error timeout invalid_header;        
-        proxy_set_header Host $host:9540;
-        proxy_set_header X-Real-IP $remote_addr:9540;
-    }
-
-    location /bpm-ui {
-        proxy_pass https://eweblayer_servers:9900;
-        proxy_next_upstream http_403 http_404 http_500 http_502 http_503 error timeout invalid_header;        
-        proxy_set_header Host $host:9900;
-        proxy_set_header X-Real-IP $remote_addr:9900;
     }
 
     underscores_in_headers on;
