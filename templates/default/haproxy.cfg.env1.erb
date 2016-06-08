@@ -1,0 +1,37 @@
+global
+        log 127.0.0.1   local0
+        log 127.0.0.1   local1 notice
+        maxconn 4096
+        user haproxy
+        group haproxy
+
+defaults
+        log     global
+        mode    http
+        option  dontlognull
+        retries 3
+        option  redispatch
+        maxconn 3000
+        timeout http-request    10s
+        timeout queue           1m
+        timeout connect         10s
+        timeout client          1m
+        timeout server          1m
+        timeout http-keep-alive 10s
+        timeout check           10s
+
+
+frontend propel_frontend
+  bind *:9595
+  mode tcp
+  default_backend propel_app
+
+backend propel_app
+  mode tcp
+  balance roundrobin
+  server propel-app-1 <%= @app_1 %>:5671
+  server propel-app-2 <%= @app_2 %>:5671
+
+listen admin 0.0.0.0:22002
+  mode http
+  stats uri /
