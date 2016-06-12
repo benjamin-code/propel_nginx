@@ -7,13 +7,6 @@ package "haproxy" do
   action :install
 end
 
-template "/etc/default/haproxy" do
-  source "haproxy-default.erb"
-  owner "root"
-  group "root"
-  mode 0644
-end
-
 service "haproxy" do
   supports :restart => true, :status => true, :reload => true
   action [:enable, :start]
