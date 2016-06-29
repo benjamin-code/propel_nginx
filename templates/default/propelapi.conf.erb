@@ -1,7 +1,12 @@
 
 upstream cpi_backends {
-    ip_hash;
+    least_conn;
     server <%= @upstream_1 %>:<%= @image_service_port %>;
+
+    # only turn on second node (HA) for dev
+    <% if (node['fqdn'] == 'c4t12189.itcs.hpecorp.net') %>
+    server <%= @upstream_2 %>:<%= @image_service_port %>;
+    <% end %>
 }
 
 server {
@@ -19,6 +24,7 @@ server {
         proxy_request_buffering off;
         proxy_buffering off;
         client_max_body_size 0;         # turn off the checking for body size since PUT will have large (> 10GB) body for the image upload
+        add_header  X-Upstream  $upstream_addr always;
     }
 
     location /monitor.html{alias <%= @monitor_file %>;}

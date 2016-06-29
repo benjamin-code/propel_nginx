@@ -30,6 +30,7 @@ end
 
 if node['fqdn'] == 'c4t12189.itcs.hpecorp.net'
     default[:propel_nginx][:propel_appserver_1] = "c4t12191.itcs.hpecorp.net"
+    default[:propel_nginx][:propel_appserver_2] = "c4t12190.itcs.hpecorp.net"
     default[:propel_nginx][:propel_cert_path] = "/etc/ssl/certs/portlet_nginx.crt"  # portlet_proxy will install this cert
     default[:propel_nginx][:propel_iweblayer_vip] = nil
     default[:propel_nginx][:propel_key_path] = "/etc/ssl/certs/portlet_nginx.key"   # portlet_proxy will install this key

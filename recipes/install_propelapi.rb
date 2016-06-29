@@ -16,6 +16,7 @@ template "/etc/nginx/conf.d/propelapi.conf" do
     source "propelapi.conf.erb"
     variables ({
       :upstream_1 => node[:propel_nginx][:propel_appserver_1],
+      :upstream_2 => node[:propel_nginx][:propel_appserver_2],
       :cert_path => node[:propel_nginx][:propel_cert_path],
       :key_path => node[:propel_nginx][:propel_key_path],
       :image_service_path => node[:propel_nginx][:image_service_path],
